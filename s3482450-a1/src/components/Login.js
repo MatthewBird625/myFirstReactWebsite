@@ -1,5 +1,5 @@
-import { Button } from "react-bootstrap";
-
+import { Button, Row, Col} from "react-bootstrap";
+import "./Login.css"
 const Login = () => {
 
     return (
@@ -10,10 +10,19 @@ const Login = () => {
           company policy requires that all content is to be only accessed
           by registered members!
         </p>
-        <Button className="px-4 mx-4"> Login</Button>
-        <Button className="px-4" variant="secondary">
+        <Row>
+            <Col>
+            <Button className="mx-1 my-2 button-bigger"> Login</Button>
+            </Col>
+            <Col >
+            <Button className="mx-1 my-2 button-bigger" variant="secondary">
           Register
         </Button>
+
+            </Col>
+        </Row>
+   
+      
         </div>
     )
 }
