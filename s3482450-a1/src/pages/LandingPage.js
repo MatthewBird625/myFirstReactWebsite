@@ -1,6 +1,7 @@
 import { Container, Row, Col, Image} from "react-bootstrap";
 import Login from "../components/Login";
 import EmployeeReminder from "../components/EmployeeReminder";
+import mainLogo from '../img/logo.png'
 
 const LandingPage = () => {
 
@@ -12,11 +13,13 @@ const LandingPage = () => {
 
           {/* Dummy placeg=holder for now- TODO replace with company logo */}
             <Image
-              src="https://picsum.photos/600/400"
+              src={mainLogo}
               fluid
               rounded
               className=""
+              width= "600"
             />
+             {/* image generated from https://smashinglogo.com/ and used for non for profit educational purposes */}
           </Col>
     
           {/* PAGE RIGHT */}
