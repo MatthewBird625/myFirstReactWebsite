@@ -7,7 +7,8 @@ import LandingPage from "./pages/LandingPage";
 import { useState } from "react";
 
 import LoginForm from "./components/LoginForm";
-import Login from "./components/Login";
+import LoginMenu from "./components/LoginMenu";
+import RegisterForm from "./components/RegisterForm";
 
 function App() {
   const [login, setLogin] = useState(false);
@@ -22,11 +23,12 @@ function App() {
         <main>
           <Routes>
             <Route path="/" element={<LandingPage />}>
-            <Route path="/" element={<Login />} />
+            <Route path="/" element={<LoginMenu />} />
               <Route path="/login" element={<LoginForm />} />
+              <Route path="/register" element={<RegisterForm />} />
             
             </Route>
-            <Route path="/register" element={<LoginForm />} />
+         
           </Routes>
         </main>
 

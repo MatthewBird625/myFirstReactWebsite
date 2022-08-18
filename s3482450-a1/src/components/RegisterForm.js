@@ -2,14 +2,27 @@ import { useState } from "react";
 import { Form, Button, Row, Col } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import "./Login.css";
-const LoginForm = () => {
+const RegisterForm = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [name, setName] = useState("");
 
   return (
     <div>
       {" "}
       <Form>
+      <Form.Group
+          className="mb-3"
+          controlId="formBasicName"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+        >
+          <Form.Label>Name</Form.Label>
+          <Form.Control type="email" placeholder="john smith" />
+          <Form.Text className="text-muted">
+            name goes here
+          </Form.Text>
+        </Form.Group>
         <Form.Group
           className="mb-3"
           controlId="formBasicEmail"
@@ -55,4 +68,4 @@ const LoginForm = () => {
   );
 };
 
-export default LoginForm;
+export default RegisterForm;
