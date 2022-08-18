@@ -1,5 +1,4 @@
 import { Container, Row, Col, Image} from "react-bootstrap";
-import LoginMenu from "../components/LoginMenu";
 import EmployeeReminder from "../components/EmployeeReminder";
 import mainLogo from '../img/logo.png'
 import { Outlet } from "react-router-dom";

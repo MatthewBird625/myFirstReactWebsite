@@ -1,6 +1,6 @@
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Route, Routes, useNavigate} from "react-router-dom";
 import NavBarComponent from "./components/NavBarComponent";
 import { Container } from "react-bootstrap";
 import LandingPage from "./pages/LandingPage";
@@ -13,6 +13,7 @@ import RegisterForm from "./components/RegisterForm";
 function App() {
   const [login, setLogin] = useState(false);
 
+
   return (
     <BrowserRouter>
       <div className="App">
@@ -23,8 +24,8 @@ function App() {
         <main>
           <Routes>
             <Route path="/" element={<LandingPage />}>
-            <Route path="/" element={<LoginMenu />} />
-              <Route path="/login" element={<LoginForm />} />
+            <Route path="/" element={<LoginMenu loginStatus= {login}/>} />
+              <Route path="/loginForm" element={<LoginForm setLogin = {setLogin}/>} />
               <Route path="/register" element={<RegisterForm />} />
             
             </Route>

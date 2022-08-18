@@ -1,10 +1,15 @@
 import { Button, Row, Col } from "react-bootstrap";
-import { Link, Outlet } from "react-router-dom";
+import { Link} from "react-router-dom";
 import "./Login.css";
-const Login = () => {
+const Login = (props) => {
+
+
+
+
   return (
     <div>
-    <div>
+    
+    {props.loginStatus!== true && (<div>
       <h1>sign in to continue</h1>
      <p class="mt-4">
         {" "}
@@ -13,7 +18,7 @@ const Login = () => {
       </p>
       <Row>
         <Col>
-          <Link to="/login">
+          <Link to="/loginForm">
             <Button className="mx-1 my-2 button-bigger"> Login</Button>
           </Link>
         </Col>
@@ -28,7 +33,16 @@ const Login = () => {
       
       </Row>
   
-    </div>
+    </div>) }
+    {props.loginStatus === true && (<div>
+      <h1>Welcome...</h1>
+     <p class="mt-4">
+        {localStorage.getItem("name")}
+        
+      </p>
+      
+  
+    </div>)}
     
     </div>
   );
