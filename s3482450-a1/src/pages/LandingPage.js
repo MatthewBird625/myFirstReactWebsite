@@ -2,6 +2,7 @@ import { Container, Row, Col, Image} from "react-bootstrap";
 import Login from "../components/Login";
 import EmployeeReminder from "../components/EmployeeReminder";
 import mainLogo from '../img/logo.png'
+import { Outlet } from "react-router-dom";
 
 const LandingPage = () => {
 
@@ -24,8 +25,9 @@ const LandingPage = () => {
     
           {/* PAGE RIGHT */}
           <Col sm={4}>
-
-          <Login />
+        
+         { 
+         }<Outlet />
            
           </Col>
         </Row>
