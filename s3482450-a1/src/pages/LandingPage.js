@@ -1,7 +1,7 @@
 import { Container, Row, Col, Image} from "react-bootstrap";
-import Login from "../components/Login";
 import EmployeeReminder from "../components/EmployeeReminder";
 import mainLogo from '../img/logo.png'
+import { Outlet } from "react-router-dom";
 
 const LandingPage = () => {
 
@@ -9,7 +9,7 @@ const LandingPage = () => {
     return (   <Container>
         <Row className="px-4 my-5">
           {/* PAGE LEFT:  */}
-          <Col sm={8}>
+          <Col sm={7}>
 
           {/* Dummy placeg=holder for now- TODO replace with company logo */}
             <Image
@@ -23,9 +23,10 @@ const LandingPage = () => {
           </Col>
     
           {/* PAGE RIGHT */}
-          <Col sm={4}>
-
-          <Login />
+          <Col sm={5}>
+        
+         { 
+         }<Outlet />
            
           </Col>
         </Row>
