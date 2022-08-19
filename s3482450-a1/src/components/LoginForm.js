@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { Form, Button, Row, Col, Alert } from "react-bootstrap";
 
 import { Link, useNavigate } from "react-router-dom";
@@ -9,6 +9,9 @@ const LoginForm = (props) => {
   const [error, setError] = useState("");
 
   const navigate = useNavigate();
+
+  const emailRef = useRef(null);
+  const passRef= useRef(null);
 
 
 
@@ -29,11 +32,12 @@ const LoginForm = (props) => {
     e.preventDefault();
     if (!EMAIL_REGEX.test(email)) {
       setError("incorrect email format!");
+      emailRef.current.focus()
       return;
     }
     console.log(password);
     if (!PASS_REGEX.test(password)) {
-      console.log("testing");
+      passRef.current.focus();
       setError(
         "password must be between 8 to 20 characters, contain at least one numeric digit, one special character, one uppercase and one lowercase letter"
       );
@@ -61,9 +65,10 @@ const LoginForm = (props) => {
           controlId="formBasicEmail"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
+         
         >
           <Form.Label>Email address</Form.Label>
-          <Form.Control type="text" placeholder="email@email.com" />
+          <Form.Control type="text" placeholder="email@email.com"  ref= {emailRef} />
           <Form.Text className="text-muted"></Form.Text>
         </Form.Group>
 
@@ -75,6 +80,8 @@ const LoginForm = (props) => {
             placeholder="Password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
+            ref = {passRef}
+            
           />
           <Form.Text className="text-muted">
             password must be at least 8 characters- praise LAN.
