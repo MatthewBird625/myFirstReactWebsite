@@ -2,7 +2,7 @@ import { useRef, useState } from "react";
 import { Form, Button, Row, Col, Alert } from "react-bootstrap";
 
 import { Link, useNavigate } from "react-router-dom";
-import "./Login.css";
+import "./Button.css";
 const LoginForm = (props) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -11,17 +11,13 @@ const LoginForm = (props) => {
   const navigate = useNavigate();
 
   const emailRef = useRef(null);
-  const passRef= useRef(null);
-
-
+  const passRef = useRef(null);
 
   //   email regex from : https://emailregex.com/
-
   const EMAIL_REGEX =
     /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
   //   password regex from: https://www.thepolyglotdeveloper.com/2015/05/use-regex-to-test-password-strength-in-javascript/
-
   const PASS_REGEX = new RegExp(
     "^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,20})"
   );
@@ -32,7 +28,7 @@ const LoginForm = (props) => {
     e.preventDefault();
     if (!EMAIL_REGEX.test(email)) {
       setError("incorrect email format!");
-      emailRef.current.focus()
+      emailRef.current.focus();
       return;
     }
     console.log(password);
@@ -52,7 +48,8 @@ const LoginForm = (props) => {
 
     if (storedEmail === email && storedPassword === password) {
       props.setLogin(true);
-      navigate("/");
+      props.logInUser(email);
+      navigate("/profile");
     }
   };
 
@@ -65,10 +62,13 @@ const LoginForm = (props) => {
           controlId="formBasicEmail"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-         
         >
           <Form.Label>Email address</Form.Label>
-          <Form.Control type="text" placeholder="email@email.com"  ref= {emailRef} />
+          <Form.Control
+            type="text"
+            placeholder="email@email.com"
+            ref={emailRef}
+          />
           <Form.Text className="text-muted"></Form.Text>
         </Form.Group>
 
@@ -80,8 +80,7 @@ const LoginForm = (props) => {
             placeholder="Password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            ref = {passRef}
-            
+            ref={passRef}
           />
           <Form.Text className="text-muted">
             password must be at least 8 characters- praise LAN.
@@ -97,11 +96,7 @@ const LoginForm = (props) => {
           <Col>
             <Link to="/">
               {" "}
-              <Button
-                className="button-bigger"
-                variant="secondary"
-                type="submit"
-              >
+              <Button className="button-bigger" variant="secondary">
                 Back
               </Button>
             </Link>

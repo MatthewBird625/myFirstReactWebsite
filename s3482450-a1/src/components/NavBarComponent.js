@@ -1,21 +1,24 @@
 import { Navbar, Container, Nav } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
 
 const NavBarComponent = (props) => {
 
-  console.log(props.loggedIn);
+  const navigate = useNavigate();
+
+  
   return (
     <div>
       <Navbar bg="dark" variant="dark" expand="lg">
         <Container>
-          <Navbar.Brand href="#home">LAN Company Portal</Navbar.Brand>
+          <Navbar.Brand >LAN Company Portal</Navbar.Brand>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
 
           {props.loggedIn ? ( <Nav className="me-auto">
-              <Nav.Link href="#home">Home</Nav.Link>
-              <Nav.Link href="#profile">Profile</Nav.Link>
-              <Nav.Link to="/feed">Feed</Nav.Link>
-              <Nav.Link href="#logout">Logout</Nav.Link>
+              <Nav.Link onClick={()=>{navigate("/")}}>Home</Nav.Link>
+              <Nav.Link onClick={()=>{navigate("/profile")}}>Profile</Nav.Link>
+              <Nav.Link onClick={()=>{navigate("/")}}>Feed</Nav.Link>
+              <Nav.Link href="/">Logout</Nav.Link>
             </Nav>) : (<div></div>)}
            
           </Navbar.Collapse>
