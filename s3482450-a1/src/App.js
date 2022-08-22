@@ -12,6 +12,9 @@ import LoginMenu from "./components/LoginMenu";
 import RegisterForm from "./components/RegisterForm";
 import ProfilePage from "./pages/ProfilePage";
 import Profile from "./components/Profile";
+import ProfileEdit from "./components/ProfileEdit";
+import PasswordEdit from "./components/PasswordEdit";
+import DeleteUser from "./components/DeleteUser";
 
 function App() {
   const [login, setLogin] = useState(false);
@@ -58,6 +61,24 @@ function App() {
                   path="/profile"
                   element={
                     <Profile loginStatus={login} currentUser={currentUser} />
+                  }
+                />
+                 <Route
+                  path="/profile/edit"
+                  element={
+                    <ProfileEdit loginStatus={login} logInUser={logInUser} currentUser={currentUser} />
+                  }
+                />
+                 <Route
+                  path="/profile/changePassword"
+                  element={
+                    <PasswordEdit loginStatus={login} logInUser={logInUser} currentUser={currentUser} />
+                  }
+                />
+                  <Route
+                  path="/profile/delete"
+                  element={
+                    <DeleteUser loginStatus={login} logInUser={logInUser} currentUser={currentUser}  setLogin= {setLogin} setCurrentUser= {currentUser}/>
                   }
                 />
               </Route>

@@ -23,6 +23,8 @@ const LoginForm = (props) => {
   );
 
   const handleSubmit = (e) => {
+    let storedEmail = localStorage.getItem("email");
+    let storedPassword = localStorage.getItem("password");
     setError("");
 
     e.preventDefault();
@@ -38,6 +40,13 @@ const LoginForm = (props) => {
         "password must be between 8 to 20 characters, contain at least one numeric digit, one special character, one uppercase and one lowercase letter"
       );
       return;
+    }
+
+    if(password !== storedPassword || email !== storedEmail){
+      setError("invalid user name or password!");
+      passRef.current.focus();
+      return;
+
     }
     loginUser(email, password);
   };
