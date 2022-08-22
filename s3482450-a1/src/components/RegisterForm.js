@@ -1,7 +1,7 @@
 import { useRef, useState } from "react";
 import { Form, Button, Row, Col, Alert } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
-import "./Login.css";
+import "./Button.css";
 const RegisterForm = (props) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -49,6 +49,8 @@ const RegisterForm = (props) => {
 
       return;
     }
+
+    alert("registration successful!");
 
     registerUser(name, email, password);
     navigate("/loginForm");
