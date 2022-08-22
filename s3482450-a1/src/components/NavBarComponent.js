@@ -18,6 +18,7 @@ const NavBarComponent = (props) => {
               <Nav.Link onClick={()=>{navigate("/")}}>Home</Nav.Link>
               <Nav.Link onClick={()=>{navigate("/profile")}}>Profile</Nav.Link>
               <Nav.Link onClick={()=>{navigate("/")}}>Feed</Nav.Link>
+              <Nav.Link onClick={()=>{navigate("/post")}}>Post</Nav.Link>
               <Nav.Link href="/">Logout</Nav.Link>
             </Nav>) : (<div></div>)}
            
