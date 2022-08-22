@@ -1,12 +1,17 @@
 import {Card, Button, Table} from "react-bootstrap";
 import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 
 
 const Profile = (props) => {
 
     const [name, setName] = useState(localStorage.getItem("name"));
     const [email, setEmail] = useState(props.currentUser);
-    const [pass, setPass] = useState(localStorage.getItem("password"));
+
+   
+
+
+
 
     return    <Card>
             <Card.Header>Profile</Card.Header>
@@ -37,12 +42,21 @@ const Profile = (props) => {
                   </tbody>
                 </Table>
               </Card.Text>
-              <Button variant="primary" className="button-bigger">
+              
+             <Link to="/profile/edit"><Button variant="primary" className="button-bigger more-left-margin">
                 Edit profile
-              </Button>
-              <Button variant="secondary" className="button-bigger">
+              </Button></Link> 
+            <Link to= "/profile/changePassword"><Button variant="secondary" className="button-bigger more-left-margin">
                 Change Password
               </Button>
+
+            </Link>
+            <Link to= "/profile/delete"><Button variant="danger" className="button-bigger more-left-margin">
+                Delete Account
+              </Button>
+
+            </Link>
+            
             </Card.Body>
           </Card>
 }

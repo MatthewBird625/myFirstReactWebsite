@@ -6,7 +6,6 @@ import {
 } from "react-bootstrap";
 import profile from "../img/profile.jpg";
 import { Outlet, useNavigate } from "react-router-dom";
-import { useState } from "react";
 
 import "../components/Button.css";
 const ProfilePage = (props) => {
