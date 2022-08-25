@@ -16,7 +16,7 @@ const DeleteUser = (props) => {
 
   return (
     <div>
-      <h1>are you sure you want to delete {props.currentUser}'s account?</h1>
+      <h2>are you sure you want to delete {props.currentUser}'s account?</h2>
       <Form onSubmit={handleSubmit}>
         <Row>
           <Col>

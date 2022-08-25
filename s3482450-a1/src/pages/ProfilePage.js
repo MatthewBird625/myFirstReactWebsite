@@ -8,6 +8,7 @@ import profile from "../img/profile.jpg";
 import { Outlet, useNavigate } from "react-router-dom";
 
 import "../components/Button.css";
+import "./view.css"
 const ProfilePage = (props) => {
 
   const navigate = useNavigate();
@@ -18,7 +19,7 @@ const ProfilePage = (props) => {
 
   return (
     <Container>
-      <Row className="px-4 my-5">
+      <Row className="px-4 my-5 min-view">
         {/* PAGE LEFT:  */}
         <Col sm={5}>
           {/* Dummy placeg=holder for now- TODO replace with company logo */}
