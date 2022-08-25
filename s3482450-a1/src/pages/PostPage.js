@@ -35,14 +35,14 @@ const PostPage = (props) => {
   useEffect(() => {
     localStorage.setItem("posts", JSON.stringify(posts));
   }, [posts]);
-
+  // handle change and handleSubmit is based off the solution presented in the RMIT FWP WEEK 5 LAB with some modifications
   const handleChange = (field) => (event) => {
     setForm((form) => ({ ...form, [field]: event.target.value }));
 
     setSuccess("");
   };
 
-  // This is based off the solution presented in the RMIT FWP WEEK 5 LAB
+
   const handleSubmit = (e) => {
     let postCount = 0;
     e.preventDefault();
