@@ -7,7 +7,10 @@ import "../components/Button.css";
 import "./PostPage.css";
 import "./view.css";
 import { useRef, useState, useEffect } from "react";
+
+
 const PostPage = (props) => {
+  
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -20,6 +23,7 @@ const PostPage = (props) => {
   const [success, setSuccess] = useState("");
   const contentRef = useRef(null);
 
+  const [imageUpload, setImageUpload] = useState(null);
   const [form, setForm] = useState({
     content: "",
     userAccount: props.currentUser,
@@ -31,6 +35,7 @@ const PostPage = (props) => {
       ? JSON.parse(localStorage.getItem("posts"))
       : []
   );
+  
 
   useEffect(() => {
     localStorage.setItem("posts", JSON.stringify(posts));
@@ -59,18 +64,23 @@ const PostPage = (props) => {
         return entry;
       });
       //Later this post ID will come from the backend
-      //currently it generates ID in increments of 2 instead of 1 thanks to the React development environment. 
-      //this post ID will be used with a /images path to store images locally for now timm the back end is developed. 
+      //currently it generates ID in increments of 2 instead of 1 thanks to the React development environment.
+      //this post ID will be used with a /images path to store images locally for now till the back end is developed.
       form.postId = postCount;
       newPosts.push(form);
       setSuccess("post successful!");
       setForm({ content: "", userAccount: props.currentUser });
-      console.log(postCount)
+
+      //if the user has an image
+      //functionality to store image on backend goes here:
+      if(imageUpload){
+        console.log(imageUpload)
+      }
+    
       return newPosts;
     });
-  
   };
-  
+
   return (
     <Container fluid>
       <Row className="min-view post">
@@ -78,8 +88,35 @@ const PostPage = (props) => {
         <Col sm={8} md={6}>
           {/* Dummy placeg=holder for now- TODO replace with company logo */}
           <h1 className="heading">Make a Post</h1>
+          {imageUpload && (
+        <div>
+        <img className="post-image" alt="not fount"src={URL.createObjectURL(imageUpload)} />
+        <br />
+        <Button className="image-button" variant="secondary" onClick={()=>setImageUpload(null)}>Remove</Button>
+      
+        </div>
+      )}
 
           <Form onSubmit={handleSubmit}>
+          <Form.Group
+              className="mb-3"
+              controlId="formBasicontent"
+              value={form.content}
+              onChange={handleChange("content")}
+            >
+              <Form.Label></Form.Label>
+              <Form.Control
+                type="file"
+                name="myImage"
+                multiple accept="image/*"
+        onChange={(event) => {
+          console.log(event.target.files[0]);
+          setImageUpload(event.target.files[0]);
+        }}
+               
+              />
+              <Form.Text className="text-muted">upload image</Form.Text>
+            </Form.Group>
             <Form.Group
               className="mb-3"
               controlId="formBasicontent"

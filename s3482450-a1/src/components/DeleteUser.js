@@ -1,15 +1,45 @@
 import { Form, Row, Col, Button } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
 
 const DeleteUser = (props) => {
   const navigate = useNavigate();
 
+    useEffect(() => {
+      if (props.loginStatus !== true) {
+        navigate("/");
+      }
+    });
+
+
+  const [users, setUsers] = useState(
+    localStorage.getItem("users")
+      ? JSON.parse(localStorage.getItem("users"))
+      : []
+  );
+
+  useEffect(() => {
+    localStorage.setItem("users", JSON.stringify(users));
+   
+  }, [users]);
+
+
   const handleSubmit = () => {
-    localStorage.clear();
+    setUsers(()=>{
+      let newUsers = [...users]
+      newUsers = newUsers.filter(userFiltered => userFiltered.email !== props.currentUser)
+      console.log(newUsers)
+
+      return newUsers;
+
+    })
+
     props.setLogin(false);
     props.setCurrentUser("");
-    alert("account deleted!");
-    navigate("/");
+
+    
+
+   
 
     return;
   };

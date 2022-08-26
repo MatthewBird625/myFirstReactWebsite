@@ -1,0 +1,13 @@
+.post{
+
+    margin: 5vh 5vw;
+}
+
+h1, h3{
+    text-align: center;
+}
+
+.button{
+     width: 50%;
+     margin: auto;
+}

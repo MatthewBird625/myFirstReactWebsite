@@ -1,14 +1,26 @@
 import {Card, Button, Table} from "react-bootstrap";
-import { useState } from "react";
+import { useState , useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
 
 const Profile = (props) => {
 
-    const [name, setName] = useState(localStorage.getItem("name"));
-    const [email, setEmail] = useState(props.currentUser);
+  const navigate = useNavigate();
 
-   
+    useEffect(() => {
+      if (props.loginStatus !== true) {
+        navigate("/");
+      }
+    });
+
+    
+  const [users] = useState(
+    localStorage.getItem("users")
+      ? JSON.parse(localStorage.getItem("users"))
+      : []
+  );
+ 
+  let user = users.find(userSearch => userSearch.email === props.currentUser);
 
 
 
@@ -25,7 +37,7 @@ const Profile = (props) => {
                   </thead>
                   <tbody>
                     <tr>
-                      <td>{name}</td>
+                      <td>{user.name}</td>
                     </tr>
                   </tbody>
                 </Table>
@@ -37,7 +49,7 @@ const Profile = (props) => {
                   </thead>
                   <tbody>
                     <tr>
-                      <td>{email}</td>
+                      <td>{user.email}</td>
                     </tr>
                   </tbody>
                 </Table>

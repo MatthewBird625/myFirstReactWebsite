@@ -16,6 +16,7 @@ import ProfileEdit from "./components/ProfileEdit";
 import PasswordEdit from "./components/PasswordEdit";
 import DeleteUser from "./components/DeleteUser";
 import PostPage from "./pages/PostPage";
+import Feed from "./pages/Feed";
 
 function App() {
   const [login, setLogin] = useState(false);
@@ -84,7 +85,10 @@ function App() {
                 />
               </Route>
                  <Route path="/post" element={<PostPage login={login} currentUser={currentUser}/>}></Route>
+                 <Route path="/feed" element={<Feed login={login} currentUser={currentUser}/>}></Route>
             </Routes>
+
+            
           </main>
 
           <footer className="py-5 my5 bg-dark">
