@@ -1,10 +1,12 @@
 # 3482450 README
 
-
+This readme is related to marking. See readme in src for lanch instructions.
 
 ## node version:
 
 USING NODE: V17.6.0
+
+standard React npm install /start to run app on port /3000 - see readme in src folder. 
 
 
 ## sections completed and notes: 
