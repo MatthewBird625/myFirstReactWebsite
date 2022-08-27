@@ -76,7 +76,7 @@ const RegisterForm = (props) => {
       }
       newUsers.push(user);
       console.log("newusers: " + newUsers);
-      setSuccess("registration successful");
+      setSuccess(user.email + " registration successful");
 
       return newUsers;
     });

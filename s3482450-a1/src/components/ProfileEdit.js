@@ -6,6 +6,7 @@ import { Link, useNavigate } from "react-router-dom";
 const ProfileEdit = (props) => {
 
   const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
 
   const emailRef = useRef(null);
   const nameRef = useRef(null);
@@ -36,6 +37,7 @@ const ProfileEdit = (props) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     setError("");
+    setSuccess("");
 
     
     if (!EMAIL_REGEX.test(user.email)) {
@@ -68,6 +70,7 @@ const ProfileEdit = (props) => {
      
 
   });
+  setSuccess("profile updated!");
 
   props.logInUser(user.email)
 
@@ -123,6 +126,7 @@ const ProfileEdit = (props) => {
           </Col>
         </Row>
         {error && <Alert variant="danger">{error}</Alert>}
+        {success && <Alert variant="success">{success}</Alert>}
       </Form>
     </div>
   );

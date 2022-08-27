@@ -21,6 +21,26 @@ const Feed = (props) => {
           : []
       );
 
+
+  const [comments, setComments] = useState(
+    localStorage.getItem("comments")
+      ? JSON.parse(localStorage.getItem("comments"))
+      : []
+  );
+
+  //temporary front end PK generator for posts until back end is implemented
+  const [postCount, setPostCount] = useState(
+    localStorage.getItem("postCount")
+      ? JSON.parse(localStorage.getItem("postCount"))
+      : 0
+  );
+
+  useEffect(() => {
+    localStorage.setItem("postCount", postCount.toString())
+  }, [postCount]);
+
+
+
     
 
 
@@ -33,7 +53,7 @@ const Feed = (props) => {
             <Col sm={10} md= {8}>
             <h1>Your feed:</h1>
 
-            {posts.map((post)=>( <Post postData= {post}/> ))}
+            {posts.map((post)=>( <Post setPostCount={setPostCount} postCount={postCount} postData= {post} comments={comments} setComments={setComments} currentUser = {props.currentUser}/> ))}
       
                 
             </Col>

@@ -13,6 +13,17 @@ const PostPage = (props) => {
   
   const navigate = useNavigate();
 
+
+  // i manually generate a pk for each post using this state and post counter in local storage.
+  //later this will be replaced with the pk from the database- without this when a profile is deleted, 
+  // the comments of that post move to the next made post! which is incorrect behaviour
+  const [postCount, setPostCount] = useState(
+    localStorage.getItem("postCount")
+      ? JSON.parse(localStorage.getItem("postCount"))
+      : 0
+  );
+
+
   useEffect(() => {
     if (props.login !== true) {
       navigate("/");
@@ -27,7 +38,7 @@ const PostPage = (props) => {
   const [form, setForm] = useState({
     content: "",
     userAccount: props.currentUser,
-    postId: 0
+    postId: postCount
   });
 
   const [posts, setPosts] = useState(
@@ -40,6 +51,12 @@ const PostPage = (props) => {
   useEffect(() => {
     localStorage.setItem("posts", JSON.stringify(posts));
   }, [posts]);
+
+  useEffect(() => {
+    localStorage.setItem("postCount", JSON.stringify(postCount));
+  }, [postCount]);
+
+
   // handle change and handleSubmit is based off the solution presented in the RMIT FWP WEEK 5 LAB with some modifications
   const handleChange = (field) => (event) => {
     setForm((form) => ({ ...form, [field]: event.target.value }));
@@ -66,10 +83,13 @@ const PostPage = (props) => {
       //Later this post ID will come from the backend
       //currently it generates ID in increments of 2 instead of 1 thanks to the React development environment.
       //this post ID will be used with a /images path to store images locally for now till the back end is developed.
+      //currently increments values of 2 instead of 1- but doesnt't affect funcitonality and not worth fixing as this will not be used later. 
+      
       form.postId = postCount;
       newPosts.push(form);
       setSuccess("post successful!");
       setForm({ content: "", userAccount: props.currentUser });
+      setPostCount((parseInt(postCount)+1).toString())
 
       //if the user has an image
       //functionality to store image on backend goes here:

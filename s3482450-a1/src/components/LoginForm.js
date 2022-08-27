@@ -25,7 +25,6 @@ const LoginForm = (props) => {
   const handleChange = (field) => (event) => {
     setUser((user) => ({ ...user, [field]: event.target.value }));
   };
-  
 
   //   email regex from : https://emailregex.com/
   const EMAIL_REGEX =
@@ -37,7 +36,6 @@ const LoginForm = (props) => {
   );
 
   const handleSubmit = (e) => {
-  
     setError("");
 
     e.preventDefault();
@@ -54,21 +52,39 @@ const LoginForm = (props) => {
       );
       return;
     }
-    const userSearched = users.find(userSearch => userSearch.email === user.email)
-  
+    const userSearched = users.find(
+      (userSearch) => userSearch.email === user.email
+    );
 
-    if(user.password !== userSearched.password || user.email !== userSearched.email){
-      setError("invalid user name or password!");
-      passRef.current.focus();
-      return;
+    //if the inputted email does not exist the try will fail and instead the catch will run.
+    //prevents a crash from trying to read a undefined userSearched.
 
+    try {
+      if (
+        user.email !== userSearched.email ||
+        user.password !== userSearched.password
+      ) {
+        setError("invalid credentials");
+        passRef.current.focus();
+        return;
+      }
+    } catch {
+      if (userSearched === undefined) {
+        setError("no such account exists");
+        passRef.current.focus();
+        return;
+      }
     }
-    loginUser(userSearched.email, userSearched.password);
+
+    //ideally this check below not really needed as we have previously checked all other possible conditions, but too be sure too be sure!
+    if (
+      user.email === userSearched.email &&
+      user.password === userSearched.password
+    )
+      loginUser(userSearched.email, userSearched.password);
   };
 
   const loginUser = (email, password) => {
- 
-
     if (user.email === email && user.password === password) {
       props.setLogin(true);
       props.logInUser(email);

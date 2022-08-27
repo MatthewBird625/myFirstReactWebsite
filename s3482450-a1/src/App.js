@@ -24,10 +24,10 @@ function App() {
 
   const logInUser = (user) => {
     setCurrentUser(user);
-    console.log("setCurrentUser" + user);
+
   };
 
-  console.log("APPUSER: " + currentUser);
+
 
   return (
     <React.StrictMode>

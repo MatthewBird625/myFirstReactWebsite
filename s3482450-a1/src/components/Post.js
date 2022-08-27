@@ -1,85 +1,100 @@
-import { useRef, useState  } from 'react';
-import { Button } from 'react-bootstrap';
-import Card from 'react-bootstrap/Card';
-import ListGroup from 'react-bootstrap/ListGroup';
-import Form from 'react-bootstrap/Form'
-import "./Post.css"
-import { Row , Alert } from 'react-bootstrap';
+import { useRef, useState, useEffect } from "react";
+import { Button } from "react-bootstrap";
+import Card from "react-bootstrap/Card";
+import Form from "react-bootstrap/Form";
+import "./Post.css";
+import { Row, Alert } from "react-bootstrap";
+import Comments from "./Comments";
 
-const Post = (props)=>{
-    
-    const [comment, setComment] = useState({
-        content: "",
-        userAccount: props.currentUser,
-        commentId: 0
-      });
-      const commentRef = useRef(null);
-      const [error, setError] = useState("")
-      const [success, setSuccess]= useState("");
+const Post = (props) => {
+  const [comment, setComment] = useState({
+    content: "",
+    userAccount: props.currentUser,
+    commentId: 0, //not required now- but will be the PK from the database
+    postId: props.postData.postId,
+  });
 
-      const handleSubmit=(e) =>{
-        e.preventDefault()
+  useEffect(() => {
+    localStorage.setItem("comments", JSON.stringify(props.comments));
+  }, [props.comments]);
 
-      }
+  const commentRef = useRef(null);
+  const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
 
-      const handleChange = (field) => (event) => {
-        setComment((comment) => ({ ...comment, [field]: event.target.value }));
-    
-       
-      };
+  const handleSubmit = (e) => {
+    e.preventDefault();
 
-    return <Card className = "post">
-    <Card.Img variant="top" src="https://picsum.photos/200/100" />
-    <Card.Body>
-      <Card.Title className='post-username'>{props.postData.userAccount}</Card.Title>
-      <Card.Text className='post-text'>
-      {props.postData.content}
-      </Card.Text>
-    </Card.Body>
-    <ListGroup className="list-group-flush">
-      <ListGroup.Item>Comment</ListGroup.Item>
-      <ListGroup.Item>Comment</ListGroup.Item>
-      <ListGroup.Item>Comment</ListGroup.Item>
-    </ListGroup>
-    <Card.Body>
-    <Form> <Form onSubmit={handleSubmit}>
-    <h3> leave a comment</h3>
-         
-            <Form.Group
-              className="mb-3"
-              controlId="formBasicontent"
+    setError("");
+    if (comment.content.length < 1 || comment.content.length > 250) {
+      setError("comments must be between 1 and 250 characters");
+      return;
+    }
+   
+
+    setComment({...comment, commentId: parseInt(props.postCount)})
+
+    props.setPostCount((parseInt(props.postCount)+1).toString())
+
+    props.setComments(() => {
+      let newComments = [...props.comments];
+
+      newComments.push(comment);
+      return newComments;
+    });
+
+    setComment({ ...comment, content: "" });
+  };
+
+  const handleChange = (field) => (event) => {
+    setComment((comment) => ({ ...comment, [field]: event.target.value }));
+  };
+
+  return (
+    <Card className="post">
+      {/* points to a random photo for now. Will be updated with the picture from the back end when implemented */}
+      <Card.Img variant="top" src="https://picsum.photos/200/100" />
+      <Card.Body>
+        <Card.Title className="post-username">
+          {props.postData.userAccount}
+        </Card.Title>
+        <Card.Text className="post-text">{props.postData.content}</Card.Text>
+      </Card.Body>
+      <Comments comments={props.comments} postId={props.postData.postId}></Comments>
+      <Card.Body>
+        <Form onSubmit={handleSubmit}>
+          <h3> leave a comment</h3>
+
+          <Form.Group
+            className="mb-3"
+            controlId="formBasicontent"
+            value={comment.content}
+            onChange={handleChange("content")}
+          >
+            <Form.Label></Form.Label>
+            <Form.Control
+              as="textarea"
+              rows="5"
+              type="text"
+              placeholder=""
+              ref={commentRef}
               value={comment.content}
-              onChange={handleChange("content")}
-            >
-              <Form.Label></Form.Label>
-              <Form.Control
-                as="textarea"
-                rows="5"
-                type="text"
-                placeholder=""
-                ref={commentRef}
-                value= {comment.content}
-                onChange={handleChange}
-              />
-              <Form.Text className="text-muted"></Form.Text>
-            </Form.Group>
+              onChange={handleChange}
+            />
+            <Form.Text className="text-muted"></Form.Text>
+          </Form.Group>
 
-            <Row>
-                <Button
-                  className="button"
-                  variant="primary"
-                  type="submit"
-                >
-                  Submit
-                </Button>
-            
-            </Row>
-            {error && <Alert variant="danger">{error}</Alert>}
-            {success && <Alert variant="success">{success}</Alert>}
-          </Form></Form>
-
-    </Card.Body>
-  </Card>
-}
+          <Row>
+            <Button className="button" variant="primary" type="submit">
+              Submit
+            </Button>
+          </Row>
+          {error && <Alert variant="danger">{error}</Alert>}
+          {success && <Alert variant="success">{success}</Alert>}
+        </Form>
+      </Card.Body>
+    </Card>
+  );
+};
 
 export default Post;
