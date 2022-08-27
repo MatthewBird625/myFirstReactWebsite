@@ -1,14 +1,28 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 
 import { Form, Row, Col, Button, Alert } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 
 const PasswordEdit = (props) => {
-  const originalPassword = localStorage.getItem("password");
+  const [users, setUsers] = useState(
+    localStorage.getItem("users")
+      ? JSON.parse(localStorage.getItem("users"))
+      : []
+  );
+
+  useEffect(() => {
+    localStorage.setItem("users", JSON.stringify(users));
+  }, [users]);
+
+  let user = users.find((userSearch) => userSearch.email === props.currentUser);
+
+  const originalPassword = user.password;
+
   const [oldPass, setOldPass] = useState("");
   const [newPass, setNewPass] = useState("");
   const [newPassConfirm, setNewPassConfirm] = useState("");
   const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
 
   const oldPassRef = useRef(null);
   const newPassRef = useRef(null);
@@ -22,6 +36,7 @@ const PasswordEdit = (props) => {
   );
   const handleSubmit = (e) => {
     setError("");
+    setSuccess("");
 
     e.preventDefault();
     if (!PASS_REGEX.test(oldPass)) {
@@ -42,6 +57,7 @@ const PasswordEdit = (props) => {
 
     if (newPass !== newPassConfirm) {
       setError("new passwords don't match!");
+      return;
     }
     if (oldPass !== originalPassword) {
       setError("incorrect account password!");
@@ -49,13 +65,21 @@ const PasswordEdit = (props) => {
       return;
     }
 
-    updatePassword();
-    alert("password updated!");
-    navigate("/profile");
-  };
+    setUsers(() => {
+      let newUsers = [...users];
 
-  const updatePassword = () => {
-    localStorage.setItem("password", newPass);
+      newUsers = newUsers.map((details) => {
+        if (details.email === props.currentUser) {
+          user.password = newPass;
+          return user;
+        } else {
+          return details;
+        }
+      });
+      console.log(newUsers);
+      return newUsers;
+    });
+    setSuccess("password changed!");
   };
 
   return (
@@ -112,6 +136,7 @@ const PasswordEdit = (props) => {
           </Col>
         </Row>
         {error && <Alert variant="danger">{error}</Alert>}
+        {success && <Alert variant="success">{success}</Alert>}
       </Form>
     </div>
   );

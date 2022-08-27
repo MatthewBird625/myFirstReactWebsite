@@ -1,19 +1,35 @@
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import { Form, Button, Row, Col, Alert } from "react-bootstrap";
-import { Link, useNavigate } from "react-router-dom";
+import { Link} from "react-router-dom";
 import "./Button.css";
 const RegisterForm = (props) => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [name, setName] = useState("");
   const [error, setError] = useState("");
-
-  const navigate = useNavigate();
+  const [success, setSuccess] = useState("")
 
   const emailRef = useRef(null);
   const passRef = useRef(null);
   const nameRef = useRef(null);
 
+  const [users, setUsers] = useState(
+    localStorage.getItem("users")
+      ? JSON.parse(localStorage.getItem("users"))
+      : []
+  );
+
+  useEffect(() => {
+    localStorage.setItem("users", JSON.stringify(users));
+    console.log("effect!");
+  }, [users]);
+
+  const [user, setUser] = useState({
+    email: "",
+    name: "",
+    password: "",
+  });
+
+  const handleChange = (field) => (event) => {
+    setUser((user) => ({ ...user, [field]: event.target.value }));
+  };
   //   email regex from : https://emailregex.com/
 
   const EMAIL_REGEX =
@@ -27,21 +43,22 @@ const RegisterForm = (props) => {
 
   const handleSubmit = (e) => {
     setError("");
+    setSuccess("");
 
     e.preventDefault();
-    if (name.length < 1) {
+    if (user.name.length < 1) {
       setError("insert a name!");
       nameRef.current.focus();
       return;
     }
-    if (!EMAIL_REGEX.test(email)) {
+    if (!EMAIL_REGEX.test(user.email)) {
       setError("incorrect email format!");
       emailRef.current.focus();
 
       return;
     }
 
-    if (!PASS_REGEX.test(password)) {
+    if (!PASS_REGEX.test(user.password)) {
       setError(
         "password must be at least 8 characters, contain at least one numeric digit, one special character, one uppercase and one lowercase letter"
       );
@@ -50,16 +67,24 @@ const RegisterForm = (props) => {
       return;
     }
 
-    alert("registration successful!");
+    setUsers(() => {
+      let newUsers = [...users];
+      if(newUsers.find((entry) => entry.email === user.email)){
+        console.log()
+        setError("email already registered!")
+        return users;
+      }
+      newUsers.push(user);
+      console.log("newusers: " + newUsers);
+      setSuccess(user.email + " registration successful");
 
-    registerUser(name, email, password);
-    navigate("/loginForm");
-  };
+      return newUsers;
+    });
 
-  const registerUser = (name, email, password) => {
-    localStorage.setItem("name", name);
-    localStorage.setItem("email", email);
-    localStorage.setItem("password", password);
+   
+    setUser({ ...user,
+    password: "",})
+    
   };
 
   return (
@@ -69,8 +94,8 @@ const RegisterForm = (props) => {
         <Form.Group
           className="mb-3"
           controlId="formBasicName"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
+          value={user.name}
+          onChange={handleChange("name")}
         >
           <Form.Label>Name</Form.Label>
           <Form.Control type="text" placeholder="john smith" ref={nameRef} />
@@ -79,8 +104,8 @@ const RegisterForm = (props) => {
         <Form.Group
           className="mb-3"
           controlId="formBasicEmail"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
+          value={user.email}
+          onChange={handleChange("email")}
         >
           <Form.Label>Email address</Form.Label>
           <Form.Control
@@ -88,9 +113,7 @@ const RegisterForm = (props) => {
             placeholder="email@email.com"
             ref={emailRef}
           />
-          <Form.Text className="text-muted">
-            your email and Soul belongs to the Lan corperation from now
-          </Form.Text>
+          <Form.Text className="text-muted">your email</Form.Text>
         </Form.Group>
 
         <Form.Group className="mb-3" controlId="formBasicPassword">
@@ -99,12 +122,12 @@ const RegisterForm = (props) => {
           <Form.Control
             type="password"
             placeholder="Password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            value={user.password}
+            onChange={handleChange("password")}
             ref={passRef}
           />
           <Form.Text className="text-muted">
-            password must be at least 8 characters- praise LAN.
+            password must be at least 8 characters
           </Form.Text>
         </Form.Group>
 
@@ -128,6 +151,7 @@ const RegisterForm = (props) => {
           </Col>
         </Row>
         {error && <Alert variant="danger">{error}</Alert>}
+        {success && <Alert variant="success">{success}</Alert>}
       </Form>
     </div>
   );

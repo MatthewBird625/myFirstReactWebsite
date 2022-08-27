@@ -1,48 +1,87 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect} from "react";
 
 import { Form, Row, Col, Button, Alert } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 
 const ProfileEdit = (props) => {
-  const [name, setName] = useState(localStorage.getItem("name"));
-  const [email, setEmail] = useState(props.currentUser);
+
   const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
 
   const emailRef = useRef(null);
   const nameRef = useRef(null);
   const navigate = useNavigate();
+
+  const[user,setUser] = useState({
+    name: "",
+    email: "",
+    password:""
+  })
+
+  const [users, setUsers] = useState(
+    localStorage.getItem("users")
+      ? JSON.parse(localStorage.getItem("users"))
+      : []
+  );
+
+  useEffect(() => {
+    localStorage.setItem("users", JSON.stringify(users));
+   
+  }, [users]);
+
 
   //   email regex from : https://emailregex.com/
   const EMAIL_REGEX =
     /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
   const handleSubmit = (e) => {
-    setError("");
-
     e.preventDefault();
-    if (!EMAIL_REGEX.test(email)) {
+    setError("");
+    setSuccess("");
+
+    
+    if (!EMAIL_REGEX.test(user.email)) {
       setError("incorrect email format!");
       emailRef.current.focus();
       return;
     }
-    if (name.length< 1) {
+    if (user.name.length< 1) {
         setError("input a Name");
         nameRef.current.focus();
         return;
       }
 
-      updateProfile();
-      navigate("/profile");
+      setUsers(() =>{
+        let newUsers = [...users]
+      
+    
+        newUsers = newUsers.map((details) => {
+          if (details.email === props.currentUser){
+            user.password = details.password
+            return user;
+    
+          }
+          else{
+            return details;
+          }
+        })
+        console.log(newUsers)
+        return newUsers;
+     
 
-  };
+  });
+  setSuccess("profile updated!");
+
+  props.logInUser(user.email)
+
+ 
 
 
-  const updateProfile = () =>{
-    localStorage.setItem("name", name);
-    localStorage.setItem("email", email);
-    props.logInUser(email);
 
   }
+  const handleChange = (field) => (event) => {
+    setUser((user) => ({ ...user, [field]: event.target.value }));
+  };
 
   return (
     <div>
@@ -53,8 +92,8 @@ const ProfileEdit = (props) => {
           <Form.Control
             type="text"
             ref={emailRef}
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            value={user.email}
+            onChange={handleChange("email")}
           />
           <Form.Text className="text-muted"></Form.Text>
         </Form.Group>
@@ -64,8 +103,8 @@ const ProfileEdit = (props) => {
 
           <Form.Control
             type="text"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
+            value={user.name}
+            onChange={handleChange("name")}
             ref={nameRef}
           />
           <Form.Text className="text-muted"></Form.Text>
@@ -87,6 +126,7 @@ const ProfileEdit = (props) => {
           </Col>
         </Row>
         {error && <Alert variant="danger">{error}</Alert>}
+        {success && <Alert variant="success">{success}</Alert>}
       </Form>
     </div>
   );

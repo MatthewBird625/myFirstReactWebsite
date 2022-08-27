@@ -2,12 +2,13 @@ import { Container, Row, Col, Image} from "react-bootstrap";
 import EmployeeReminder from "../components/EmployeeReminder";
 import mainLogo from '../img/logo.png'
 import { Outlet } from "react-router-dom";
+import "./view.css";
 
 const LandingPage = () => {
 
 
-    return (   <Container>
-        <Row className="px-4 my-5">
+    return (   <Container className="min-view">
+        <Row className="px-4 my-5 ">
           {/* PAGE LEFT:  */}
           <Col sm={7}>
 

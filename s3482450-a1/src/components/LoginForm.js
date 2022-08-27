@@ -4,14 +4,27 @@ import { Form, Button, Row, Col, Alert } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import "./Button.css";
 const LoginForm = (props) => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
   const [error, setError] = useState("");
 
   const navigate = useNavigate();
 
   const emailRef = useRef(null);
   const passRef = useRef(null);
+
+  const [users] = useState(
+    localStorage.getItem("users")
+      ? JSON.parse(localStorage.getItem("users"))
+      : []
+  );
+
+  const [user, setUser] = useState({
+    email: "",
+    password: "",
+  });
+
+  const handleChange = (field) => (event) => {
+    setUser((user) => ({ ...user, [field]: event.target.value }));
+  };
 
   //   email regex from : https://emailregex.com/
   const EMAIL_REGEX =
@@ -23,39 +36,56 @@ const LoginForm = (props) => {
   );
 
   const handleSubmit = (e) => {
-    let storedEmail = localStorage.getItem("email");
-    let storedPassword = localStorage.getItem("password");
     setError("");
 
     e.preventDefault();
-    if (!EMAIL_REGEX.test(email)) {
+    if (!EMAIL_REGEX.test(user.email)) {
       setError("incorrect email format!");
       emailRef.current.focus();
       return;
     }
-    console.log(password);
-    if (!PASS_REGEX.test(password)) {
+
+    if (!PASS_REGEX.test(user.password)) {
       passRef.current.focus();
       setError(
         "password must be between 8 to 20 characters, contain at least one numeric digit, one special character, one uppercase and one lowercase letter"
       );
       return;
     }
+    const userSearched = users.find(
+      (userSearch) => userSearch.email === user.email
+    );
 
-    if(password !== storedPassword || email !== storedEmail){
-      setError("invalid user name or password!");
-      passRef.current.focus();
-      return;
+    //if the inputted email does not exist the try will fail and instead the catch will run.
+    //prevents a crash from trying to read a undefined userSearched.
 
+    try {
+      if (
+        user.email !== userSearched.email ||
+        user.password !== userSearched.password
+      ) {
+        setError("invalid credentials");
+        passRef.current.focus();
+        return;
+      }
+    } catch {
+      if (userSearched === undefined) {
+        setError("no such account exists");
+        passRef.current.focus();
+        return;
+      }
     }
-    loginUser(email, password);
+
+    //ideally this check below not really needed as we have previously checked all other possible conditions, but too be sure too be sure!
+    if (
+      user.email === userSearched.email &&
+      user.password === userSearched.password
+    )
+      loginUser(userSearched.email, userSearched.password);
   };
 
   const loginUser = (email, password) => {
-    let storedEmail = localStorage.getItem("email");
-    let storedPassword = localStorage.getItem("password");
-
-    if (storedEmail === email && storedPassword === password) {
+    if (user.email === email && user.password === password) {
       props.setLogin(true);
       props.logInUser(email);
       navigate("/profile");
@@ -69,8 +99,8 @@ const LoginForm = (props) => {
         <Form.Group
           className="mb-3"
           controlId="formBasicEmail"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
+          value={user.email}
+          onChange={handleChange("email")}
         >
           <Form.Label>Email address</Form.Label>
           <Form.Control
@@ -87,12 +117,12 @@ const LoginForm = (props) => {
           <Form.Control
             type="password"
             placeholder="Password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            value={user.password}
+            onChange={handleChange("password")}
             ref={passRef}
           />
           <Form.Text className="text-muted">
-            password must be at least 8 characters- praise LAN.
+            password must be at least 8 characters
           </Form.Text>
         </Form.Group>
 
