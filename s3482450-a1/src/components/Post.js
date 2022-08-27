@@ -34,7 +34,6 @@ const Post = (props) => {
 
     setComment({...comment, commentId: parseInt(props.postCount)})
 
-    props.setPostCount((parseInt(props.postCount)+1).toString())
 
     props.setComments(() => {
       let newComments = [...props.comments];

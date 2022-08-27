@@ -57,6 +57,7 @@ const PasswordEdit = (props) => {
 
     if (newPass !== newPassConfirm) {
       setError("new passwords don't match!");
+      return;
     }
     if (oldPass !== originalPassword) {
       setError("incorrect account password!");
