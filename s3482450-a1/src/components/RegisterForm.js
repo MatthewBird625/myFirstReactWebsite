@@ -25,6 +25,7 @@ const RegisterForm = (props) => {
     email: "",
     name: "",
     password: "",
+    joinDate: new Date().toDateString()
   });
 
   const handleChange = (field) => (event) => {
