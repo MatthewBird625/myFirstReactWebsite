@@ -1,6 +1,7 @@
 import {Card, Button, Table} from "react-bootstrap";
 import { useState , useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import "./Profile.css"
 
 
 const Profile = (props) => {
@@ -22,11 +23,12 @@ const Profile = (props) => {
  
   let user = users.find(userSearch => userSearch.email === props.currentUser);
 
-
+console.log(user)
 
 
     return    <Card>
             <Card.Header>Profile</Card.Header>
+            <Card.Subtitle className="mb-2 text-muted padded-date">join date: {user.joinDate}</Card.Subtitle>
             <Card.Body>
               <Card.Text>
                 <Table striped bordered hover size="sm">

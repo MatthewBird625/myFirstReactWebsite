@@ -71,6 +71,7 @@ const DeleteUser = (props) => {
 
     props.setLogin(false);
     props.logInUser("");
+    alert("account deleted!")
 
     
 
