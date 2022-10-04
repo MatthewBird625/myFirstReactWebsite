@@ -4,7 +4,7 @@ module.exports = (sequelize, DataTypes) =>
   sequelize.define(
     "user",
     {
-      username: {
+      email: {
         type: DataTypes.STRING(32),
         primaryKey: true,
       },
