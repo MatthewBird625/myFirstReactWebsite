@@ -1,4 +1,4 @@
-import { useRef, useState, useEffect } from "react";
+import { useRef, useState } from "react";
 import { Form, Button, Row, Col, Alert } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { findUser, createUser } from "../data/repository";
@@ -60,14 +60,23 @@ const RegisterForm = (props) => {
     return true;
   };
 
+  const handleTrim = (userDirty) => {
+    console.log(user);
+    let userClean = {};
+    for (const field in userDirty) {
+      userClean[field] = userDirty[field].trim();
+    }
+
+    return userClean;
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
     setSuccess("");
     let isValid = await handleValidation();
+    setUser(handleTrim(user));
     //if checks are passed- insert the user via API into the database
-    console.log("isvalid: ");
-    console.log(isValid);
     if (isValid === true)
       try {
         const newUser = await createUser(user);
