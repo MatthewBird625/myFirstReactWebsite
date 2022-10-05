@@ -1,31 +1,20 @@
-import { useRef, useState, useEffect } from "react";
+import { useRef, useState } from "react";
 import { Form, Button, Row, Col, Alert } from "react-bootstrap";
-import { Link} from "react-router-dom";
+import { Link } from "react-router-dom";
+import { findUser, createUser } from "../data/repository";
 import "./Button.css";
 const RegisterForm = (props) => {
   const [error, setError] = useState("");
-  const [success, setSuccess] = useState("")
+  const [success, setSuccess] = useState("");
 
   const emailRef = useRef(null);
   const passRef = useRef(null);
   const nameRef = useRef(null);
 
-  const [users, setUsers] = useState(
-    localStorage.getItem("users")
-      ? JSON.parse(localStorage.getItem("users"))
-      : []
-  );
-
-  useEffect(() => {
-    localStorage.setItem("users", JSON.stringify(users));
-    console.log("effect!");
-  }, [users]);
-
   const [user, setUser] = useState({
     email: "",
     name: "",
     password: "",
-    joinDate: new Date().toDateString()
   });
 
   const handleChange = (field) => (event) => {
@@ -42,21 +31,17 @@ const RegisterForm = (props) => {
     "^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})"
   );
 
-  const handleSubmit = (e) => {
-    setError("");
-    setSuccess("");
-
-    e.preventDefault();
+  const handleValidation = async () => {
     if (user.name.length < 1) {
       setError("insert a name!");
       nameRef.current.focus();
-      return;
+      return false;
     }
     if (!EMAIL_REGEX.test(user.email)) {
       setError("incorrect email format!");
       emailRef.current.focus();
 
-      return;
+      return false;
     }
 
     if (!PASS_REGEX.test(user.password)) {
@@ -65,27 +50,41 @@ const RegisterForm = (props) => {
       );
       passRef.current.focus();
 
-      return;
+      return false;
+    }
+    if ((await findUser(user.email)) !== null) {
+      setError("email already registered!");
+      return false;
     }
 
-    setUsers(() => {
-      let newUsers = [...users];
-      if(newUsers.find((entry) => entry.email === user.email)){
-        console.log()
-        setError("email already registered!")
-        return users;
+    return true;
+  };
+
+  const handleTrim = (userDirty) => {
+    console.log(user);
+    let userClean = {};
+    for (const field in userDirty) {
+      userClean[field] = userDirty[field].trim();
+    }
+
+    return userClean;
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setError("");
+    setSuccess("");
+    let isValid = await handleValidation();
+    setUser(handleTrim(user));
+    //if checks are passed- insert the user via API into the database
+    if (isValid === true)
+      try {
+        const newUser = await createUser(user);
+        setSuccess("successfully registered");
+        setUser({ ...user, password: "" });
+      } catch {
+        setError("error- please try again later or contact admin");
       }
-      newUsers.push(user);
-      console.log("newusers: " + newUsers);
-      setSuccess(user.email + " registration successful");
-
-      return newUsers;
-    });
-
-   
-    setUser({ ...user,
-    password: "",})
-    
   };
 
   return (
