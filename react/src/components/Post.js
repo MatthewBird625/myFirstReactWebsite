@@ -2,7 +2,7 @@ import { useRef, useState, useEffect } from "react";
 import { Button } from "react-bootstrap";
 import Card from "react-bootstrap/Card";
 import Form from "react-bootstrap/Form";
-import "./Post.css";
+import "../Assets/CSS/Post.css";
 import { Row, Alert } from "react-bootstrap";
 import Comments from "./Comments";
 
@@ -30,10 +30,8 @@ const Post = (props) => {
       setError("comments must be between 1 and 250 characters");
       return;
     }
-   
 
-    setComment({...comment, commentId: parseInt(props.postCount)})
-
+    setComment({ ...comment, commentId: parseInt(props.postCount) });
 
     props.setComments(() => {
       let newComments = [...props.comments];
@@ -59,7 +57,10 @@ const Post = (props) => {
         </Card.Title>
         <Card.Text className="post-text">{props.postData.content}</Card.Text>
       </Card.Body>
-      <Comments comments={props.comments} postId={props.postData.postId}></Comments>
+      <Comments
+        comments={props.comments}
+        postId={props.postData.postId}
+      ></Comments>
       <Card.Body>
         <Form onSubmit={handleSubmit}>
           <h3> leave a comment</h3>
