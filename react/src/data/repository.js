@@ -31,9 +31,14 @@ async function createUser(user) {
   return response.data;
 }
 
-async function updateUser(user) {
+async function updateUser(user, oldEmail) {
   console.log(user);
-  const response = await axios.post(API_HOST + `/api/users/update/`, user);
+  console.log(oldEmail);
+  const response = await axios.post(
+    API_HOST + `/api/users/update/`,
+    user,
+    oldEmail
+  );
 
   return response.data;
 }

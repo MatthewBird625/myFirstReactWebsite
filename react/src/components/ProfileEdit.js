@@ -57,7 +57,7 @@ const ProfileEdit = (props) => {
       return;
     }
     try {
-      updateUser(userInput);
+      updateUser(userInput, user.email);
       setSuccess("profile updated!");
     } catch {
       setError("unable to update profile- contact admin");
