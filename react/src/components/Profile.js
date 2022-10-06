@@ -1,10 +1,13 @@
 import { Card, Button, Table } from "react-bootstrap";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { getUser } from "../data/repository";
+import { getUser, findUser } from "../data/repository";
 import "../Assets/CSS/Profile.css";
 
 const Profile = (props) => {
+  const userLocalStorage = getUser();
+  const [user, setUser] = useState("");
+
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -13,15 +16,28 @@ const Profile = (props) => {
     }
   });
 
-  let user = getUser();
+  //fetch our user profile data with a use effect
 
-  console.log(user);
+  useEffect(() => {
+    const fetchUser = async () => {
+      const result = await findUser(userLocalStorage.email);
+      setUser(result);
+    };
+    fetchUser().catch(console.error);
+  }, []);
+
+  //date conversion based on this reference : https://stackoverflow.com/questions/2013255/how-to-get-year-month-day-from-a-date-object
+  let date = new Date(user.createdAt);
+  let month = date.getUTCMonth() + 1;
+  let day = date.getUTCDate();
+  let year = date.getUTCFullYear();
+  date = day + "/" + month + "/" + year;
 
   return (
     <Card>
       <Card.Header>Profile</Card.Header>
       <Card.Subtitle className="mb-2 text-muted padded-date">
-        join date: {user.joinDate}
+        join date: {date}
       </Card.Subtitle>
       <Card.Body>
         <Card.Text>
