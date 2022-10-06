@@ -15,6 +15,9 @@ module.exports = (express, app) => {
   // Create a new user.
   router.post("/", controller.create);
 
+  // Create a new user.
+  router.post("/update/", controller.update);
+
   // Add routes to server.
   app.use("/api/users", router);
 };

@@ -31,6 +31,13 @@ async function createUser(user) {
   return response.data;
 }
 
+async function updateUser(user) {
+  console.log(user);
+  const response = await axios.post(API_HOST + `/api/users/update/`, user);
+
+  return response.data;
+}
+
 // --- Helper functions to interact with local storage --------------------------------------------
 function setUser(user) {
   localStorage.setItem(USER_KEY, JSON.stringify(user));
@@ -44,4 +51,4 @@ function removeUser() {
   localStorage.removeItem(USER_KEY);
 }
 
-export { verifyUser, findUser, createUser, getUser, removeUser };
+export { verifyUser, findUser, createUser, getUser, removeUser, updateUser };

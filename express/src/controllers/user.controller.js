@@ -2,6 +2,7 @@
 
 const db = require("../database");
 const argon2 = require("argon2");
+const { user } = require("../database");
 
 // Select all users from the database.
 exports.all = async (req, res) => {
@@ -39,6 +40,23 @@ exports.create = async (req, res) => {
     password_hash: hash,
     name: req.body.name,
   });
+
+  res.json(user);
+};
+
+// update a user in the database.
+exports.update = async (req, res) => {
+  console.log(req.body.email);
+
+  const user = await db.user.update(
+    {
+      // email: req.body.email,
+      name: req.body.name,
+    },
+    {
+      where: { email: req.body.email },
+    }
+  );
 
   res.json(user);
 };

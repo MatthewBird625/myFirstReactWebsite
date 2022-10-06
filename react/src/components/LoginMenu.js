@@ -8,7 +8,7 @@ const Login = (props) => {
       {props.loginStatus !== true && (
         <div>
           <h1>sign in to continue</h1>
-          <p class="mt-4">
+          <p className="mt-4">
             {" "}
             company policy requires that all content is to be only accessed by
             registered members!
