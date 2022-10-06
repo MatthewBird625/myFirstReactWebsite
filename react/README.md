@@ -1,12 +1,14 @@
 USING NODE: V17.6.0
 
-
 # Getting Started with Create React App
 
-
-
-
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+
+## Watcher Error:
+
+If your machine does not have enough watchers(default is very low on linux) - increase watchers with
+
+`echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf && sudo sysctl -p`
 
 ## Available Scripts
 

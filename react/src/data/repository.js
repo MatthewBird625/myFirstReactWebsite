@@ -4,12 +4,12 @@ import axios from "axios";
 
 // --- Constants ----------------------------------------------------------------------------------
 const API_HOST = "http://localhost:4000";
-const USER_KEY = "user";
+const USER_KEY = "LAN.user";
 
 // --- User ---------------------------------------------------------------------------------------
-async function verifyUser(username, password) {
+async function verifyUser(email, password) {
   const response = await axios.get(API_HOST + "/api/users/login", {
-    params: { username, password },
+    params: { email, password },
   });
   const user = response.data;
 

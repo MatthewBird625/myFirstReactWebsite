@@ -3,26 +3,22 @@ import { Link } from "react-router-dom";
 
 import { useNavigate } from "react-router-dom";
 
-import "../components/Button.css";
-import "./PostPage.css";
-import "./view.css";
+import "../Assets/CSS/Button.css";
+import "../Assets/CSS/PostPage.css";
+import "../Assets/CSS/view.css";
 import { useRef, useState, useEffect } from "react";
 
-
 const PostPage = (props) => {
-  
   const navigate = useNavigate();
 
-
   // i manually generate a pk for each post using this state and post counter in local storage.
-  //later this will be replaced with the pk from the database- without this when a profile is deleted, 
+  //later this will be replaced with the pk from the database- without this when a profile is deleted,
   // the comments of that post move to the next made post! which is incorrect behaviour
   const [postCount, setPostCount] = useState(
     localStorage.getItem("postCount")
       ? JSON.parse(localStorage.getItem("postCount"))
       : 0
   );
-
 
   useEffect(() => {
     if (props.login !== true) {
@@ -38,7 +34,7 @@ const PostPage = (props) => {
   const [form, setForm] = useState({
     content: "",
     userAccount: props.currentUser,
-    postId: postCount
+    postId: postCount,
   });
 
   const [posts, setPosts] = useState(
@@ -46,7 +42,6 @@ const PostPage = (props) => {
       ? JSON.parse(localStorage.getItem("posts"))
       : []
   );
-  
 
   useEffect(() => {
     localStorage.setItem("posts", JSON.stringify(posts));
@@ -56,14 +51,12 @@ const PostPage = (props) => {
     localStorage.setItem("postCount", JSON.stringify(postCount));
   }, [postCount]);
 
-
   // handle change and handleSubmit is based off the solution presented in the RMIT FWP WEEK 5 LAB with some modifications
   const handleChange = (field) => (event) => {
     setForm((form) => ({ ...form, [field]: event.target.value }));
 
     setSuccess("");
   };
-
 
   const handleSubmit = (e) => {
     let postCount = 0;
@@ -83,20 +76,20 @@ const PostPage = (props) => {
       //Later this post ID will come from the backend
       //currently it generates ID in increments of 2 instead of 1 thanks to the React development environment.
       //this post ID will be used with a /images path to store images locally for now till the back end is developed.
-      //currently increments values of 2 instead of 1- but doesnt't affect funcitonality and not worth fixing as this will not be used later. 
-      
+      //currently increments values of 2 instead of 1- but doesnt't affect funcitonality and not worth fixing as this will not be used later.
+
       form.postId = postCount;
       newPosts.push(form);
       setSuccess("post successful!");
       setForm({ content: "", userAccount: props.currentUser });
-      setPostCount((parseInt(postCount)+1).toString())
+      setPostCount((parseInt(postCount) + 1).toString());
 
       //if the user has an image
       //functionality to store image on backend goes here:
-      if(imageUpload){
-        console.log(imageUpload)
+      if (imageUpload) {
+        console.log(imageUpload);
       }
-    
+
       return newPosts;
     });
   };
@@ -109,16 +102,25 @@ const PostPage = (props) => {
           {/* Dummy placeg=holder for now- TODO replace with company logo */}
           <h1 className="heading">Make a Post</h1>
           {imageUpload && (
-        <div>
-        <img className="post-image" alt="not fount"src={URL.createObjectURL(imageUpload)} />
-        <br />
-        <Button className="image-button" variant="secondary" onClick={()=>setImageUpload(null)}>Remove</Button>
-      
-        </div>
-      )}
+            <div>
+              <img
+                className="post-image"
+                alt="not fount"
+                src={URL.createObjectURL(imageUpload)}
+              />
+              <br />
+              <Button
+                className="image-button"
+                variant="secondary"
+                onClick={() => setImageUpload(null)}
+              >
+                Remove
+              </Button>
+            </div>
+          )}
 
           <Form onSubmit={handleSubmit}>
-          <Form.Group
+            <Form.Group
               className="mb-3"
               controlId="formBasicontent"
               value={form.content}
@@ -128,12 +130,12 @@ const PostPage = (props) => {
               <Form.Control
                 type="file"
                 name="myImage"
-                multiple accept="image/*"
-        onChange={(event) => {
-          console.log(event.target.files[0]);
-          setImageUpload(event.target.files[0]);
-        }}
-               
+                multiple
+                accept="image/*"
+                onChange={(event) => {
+                  console.log(event.target.files[0]);
+                  setImageUpload(event.target.files[0]);
+                }}
               />
               <Form.Text className="text-muted">upload image</Form.Text>
             </Form.Group>

@@ -1,16 +1,10 @@
-import {
-  Container,
-  Row,
-  Col,
-  Image
-} from "react-bootstrap";
+import { Container, Row, Col, Image } from "react-bootstrap";
 import profile from "../img/profile.jpg";
 import { Outlet, useNavigate } from "react-router-dom";
 
-import "../components/Button.css";
-import "./view.css"
+import "../Assets/CSS/Button.css";
+import "../Assets/CSS/view.css";
 const ProfilePage = (props) => {
-
   const navigate = useNavigate();
 
   if (props.loginStatus !== true) {
@@ -29,8 +23,6 @@ const ProfilePage = (props) => {
 
         {/* PAGE RIGHT */}
         <Col sm={7}>
-       
-
           {}
           <Outlet />
         </Col>

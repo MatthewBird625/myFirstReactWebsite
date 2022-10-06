@@ -1,26 +1,20 @@
 import { useRef, useState } from "react";
 import { Form, Button, Row, Col, Alert } from "react-bootstrap";
-
 import { Link, useNavigate } from "react-router-dom";
-import "./Button.css";
+import { verifyUser, setUser } from "../data/repository";
+
+import "../Assets/CSS/Button.css";
 const LoginForm = (props) => {
+  const [user, setUser] = useState({
+    email: "",
+    password: "",
+  });
   const [error, setError] = useState("");
 
   const navigate = useNavigate();
 
   const emailRef = useRef(null);
   const passRef = useRef(null);
-
-  const [users] = useState(
-    localStorage.getItem("users")
-      ? JSON.parse(localStorage.getItem("users"))
-      : []
-  );
-
-  const [user, setUser] = useState({
-    email: "",
-    password: "",
-  });
 
   const handleChange = (field) => (event) => {
     setUser((user) => ({ ...user, [field]: event.target.value }));
@@ -35,7 +29,15 @@ const LoginForm = (props) => {
     "^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,20})"
   );
 
-  const handleSubmit = (e) => {
+  const logInUser = (email) => {
+    props.setLogin(true);
+    props.logInUser(email);
+    console.log("loggin in!");
+    setUser(email);
+    navigate("/profile");
+  };
+
+  const handleSubmit = async (e) => {
     setError("");
 
     e.preventDefault();
@@ -52,43 +54,11 @@ const LoginForm = (props) => {
       );
       return;
     }
-    const userSearched = users.find(
-      (userSearch) => userSearch.email === user.email
-    );
-
-    //if the inputted email does not exist the try will fail and instead the catch will run.
-    //prevents a crash from trying to read a undefined userSearched.
-
-    try {
-      if (
-        user.email !== userSearched.email ||
-        user.password !== userSearched.password
-      ) {
-        setError("invalid credentials");
-        passRef.current.focus();
-        return;
-      }
-    } catch {
-      if (userSearched === undefined) {
-        setError("no such account exists");
-        passRef.current.focus();
-        return;
-      }
-    }
-
-    //ideally this check below not really needed as we have previously checked all other possible conditions, but too be sure too be sure!
-    if (
-      user.email === userSearched.email &&
-      user.password === userSearched.password
-    )
-      loginUser(userSearched.email, userSearched.password);
-  };
-
-  const loginUser = (email, password) => {
-    if (user.email === email && user.password === password) {
-      props.setLogin(true);
-      props.logInUser(email);
-      navigate("/profile");
+    const userExists = await verifyUser(user.email, user.password);
+    if (userExists !== null) {
+      logInUser(user.email);
+    } else {
+      setError("incorrect username or password!");
     }
   };
 
