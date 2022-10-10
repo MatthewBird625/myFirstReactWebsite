@@ -59,8 +59,17 @@ exports.update = async (req, res) => {
 
   res.json(user);
 };
+// delete a user in the database.
+exports.delete = async (req, res) => {
+  console.log(req.body.email);
+  const user = await db.user.destroy({
+    where: { email: req.body.email },
+  });
 
-// update a user in the database.
+  res.json(user);
+};
+
+// update a user password in the database.
 exports.password = async (req, res) => {
   const userPassCheck = await db.user.findByPk(req.body.userEmail);
   //checks if the old password matches the has in the database- returns false if check fails

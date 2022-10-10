@@ -37,6 +37,12 @@ async function updateUser(user) {
   return response.data;
 }
 
+async function deleteUser(user) {
+  const response = await axios.post(API_HOST + `/api/users/delete/`, user);
+
+  return response.data;
+}
+
 async function updatePassword(passwords) {
   console.log(passwords);
   const response = await axios.post(
@@ -69,4 +75,5 @@ export {
   updateUser,
   setUserLocal,
   updatePassword,
+  deleteUser,
 };
