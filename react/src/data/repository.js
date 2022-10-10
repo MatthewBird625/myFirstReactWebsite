@@ -59,7 +59,9 @@ async function getPosts() {
 }
 
 async function createPost(post) {
+  console.log("made it to the create post");
   const response = await axios.post(API_HOST + "/api/posts", post);
+  console.log("made response");
 
   return response.data;
 }
