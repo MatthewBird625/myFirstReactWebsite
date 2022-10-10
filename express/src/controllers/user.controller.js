@@ -46,9 +46,6 @@ exports.create = async (req, res) => {
 
 // update a user in the database.
 exports.update = async (req, res) => {
-  console.log(req.body.email);
-  console.log(req.body);
-
   const user = await db.user.update(
     {
       // email: req.body.email,
@@ -56,7 +53,7 @@ exports.update = async (req, res) => {
       email: req.body.email,
     },
     {
-      where: { email: "jane@gmail.com" },
+      where: { email: req.body.oldEmail },
     }
   );
 

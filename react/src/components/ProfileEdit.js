@@ -2,7 +2,12 @@ import { useState, useRef, useEffect } from "react";
 
 import { Form, Row, Col, Button, Alert } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
-import { getUser, findUser, updateUser } from "../data/repository";
+import {
+  getUser,
+  findUser,
+  updateUser,
+  setUserLocal,
+} from "../data/repository";
 
 const ProfileEdit = (props) => {
   const [error, setError] = useState("");
@@ -18,6 +23,7 @@ const ProfileEdit = (props) => {
   const [userInput, setUserInput] = useState({
     email: "",
     name: "",
+    oldEmail: "",
   });
 
   useEffect(() => {
@@ -57,7 +63,9 @@ const ProfileEdit = (props) => {
       return;
     }
     try {
-      updateUser(userInput, user.email);
+      userInput.oldEmail = user.email;
+      setUserLocal(userInput);
+      updateUser(userInput);
       setSuccess("profile updated!");
     } catch {
       setError("unable to update profile- contact admin");
