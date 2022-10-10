@@ -17,7 +17,6 @@ const ProfileEdit = (props) => {
   const nameRef = useRef(null);
   const navigate = useNavigate();
 
-  const userLocalStorage = getUser();
   const [user, setUser] = useState("");
 
   const [userInput, setUserInput] = useState({
@@ -36,7 +35,7 @@ const ProfileEdit = (props) => {
 
   useEffect(() => {
     const fetchUser = async () => {
-      const result = await findUser(userLocalStorage.email);
+      const result = await findUser(getUser().email);
       setUser(result);
       setUserInput(result);
     };

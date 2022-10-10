@@ -59,3 +59,30 @@ exports.update = async (req, res) => {
 
   res.json(user);
 };
+
+// update a user in the database.
+exports.password = async (req, res) => {
+  const userPassCheck = await db.user.findByPk(req.body.userEmail);
+  console.log(userPassCheck);
+  console.log("HASH RESULT: ");
+  const check = await argon2.verify(userPassCheck.password_hash, req.body.old);
+
+  if (!check) res.send(200, { result: false });
+  if (check) {
+    const hashNew = await argon2.hash(req.body.new, {
+      type: argon2.argon2id,
+    });
+
+    const user = await db.user.update(
+      {
+        // email: req.body.email,
+        password_hash: hashNew,
+      },
+      {
+        where: { email: req.body.userEmail },
+      }
+    );
+
+    res.json(user);
+  }
+};

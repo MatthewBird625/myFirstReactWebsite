@@ -25,25 +25,23 @@ async function findUser(id) {
   return response.data;
 }
 
-async function deleteUser(id) {
-  const response = await axios.get(API_HOST + `/api/users/delete/${id}`);
-
-  return response.data;
-}
-
 async function createUser(user) {
   const response = await axios.post(API_HOST + "/api/users", user);
 
   return response.data;
 }
 
-async function updateUser(user, oldEmail) {
-  console.log(user);
-  console.log(oldEmail);
+async function updateUser(user) {
+  const response = await axios.post(API_HOST + `/api/users/update/`, user);
+
+  return response.data;
+}
+
+async function updatePassword(passwords) {
+  console.log(passwords);
   const response = await axios.post(
-    API_HOST + `/api/users/update/`,
-    user,
-    oldEmail
+    API_HOST + `/api/users/password/`,
+    passwords
   );
 
   return response.data;
@@ -70,4 +68,5 @@ export {
   removeUser,
   updateUser,
   setUserLocal,
+  updatePassword,
 };
