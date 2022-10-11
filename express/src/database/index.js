@@ -17,6 +17,11 @@ db.sequelize = new Sequelize(config.DB, config.USER, config.PASSWORD, {
 db.user = require("./models/user.js")(db.sequelize, DataTypes);
 db.post = require("./models/post.js")(db.sequelize, DataTypes);
 
+// Relate post and user.
+db.post.belongsTo(db.user, {
+  foreignKey: { postingUser: "email", allowNull: false },
+});
+
 //sync the database
 db.sync = async () => {
   // Sync schema.

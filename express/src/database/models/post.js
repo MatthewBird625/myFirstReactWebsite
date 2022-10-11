@@ -11,10 +11,6 @@ module.exports = (sequelize, DataTypes) =>
         type: DataTypes.TEXT,
         allowNull: false,
       },
-      userEmail: {
-        type: DataTypes.TEXT,
-        allowNull: false,
-      },
     },
     {
       timestamps: true,

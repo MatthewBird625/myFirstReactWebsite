@@ -37,12 +37,15 @@ const PostPage = (props) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setSuccess("");
+    setError("");
+
     if (form.content.length < 1 || form.content.length > 250) {
       setError("content must be between 1 and 250 characters");
       return;
     }
-    console.log(form.content);
     createPost(form);
+    setSuccess("post created!");
   };
 
   return (
@@ -84,7 +87,6 @@ const PostPage = (props) => {
                 multiple
                 accept="image/*"
                 onChange={(event) => {
-                  console.log(event.target.files[0]);
                   setImageUpload(event.target.files[0]);
                 }}
               />
