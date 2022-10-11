@@ -5,24 +5,20 @@ import Form from "react-bootstrap/Form";
 import "../Assets/CSS/Post.css";
 import { Row, Alert } from "react-bootstrap";
 import Comments from "./Comments";
+import { createComment } from "../data/repository";
 
 const Post = (props) => {
   const [comment, setComment] = useState({
     content: "",
-    userAccount: props.currentUser,
-    commentId: 0, //not required now- but will be the PK from the database
-    postId: props.postData.postId,
+    userEmail: props.currentUser,
+    postId: props.postData.post_id,
   });
-
-  useEffect(() => {
-    localStorage.setItem("comments", JSON.stringify(props.comments));
-  }, [props.comments]);
 
   const commentRef = useRef(null);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     setError("");
@@ -30,17 +26,14 @@ const Post = (props) => {
       setError("comments must be between 1 and 250 characters");
       return;
     }
-
-    setComment({ ...comment, commentId: parseInt(props.postCount) });
-
-    props.setComments(() => {
-      let newComments = [...props.comments];
-
-      newComments.push(comment);
-      return newComments;
-    });
-
-    setComment({ ...comment, content: "" });
+    try {
+      createComment(comment);
+      setSuccess("comment posted!");
+      setComment({ ...comment, content: "" });
+      props.reloadThePostsData();
+    } catch {
+      setError("failed to post comment!");
+    }
   };
 
   const handleChange = (field) => (event) => {
@@ -53,13 +46,13 @@ const Post = (props) => {
       <Card.Img variant="top" src="https://picsum.photos/200/100" />
       <Card.Body>
         <Card.Title className="post-username">
-          {props.postData.userAccount}
+          {props.postData.userEmail}
         </Card.Title>
-        <Card.Text className="post-text">{props.postData.content}</Card.Text>
+        <Card.Text className="post-text">{props.postData.text}</Card.Text>
       </Card.Body>
       <Comments
         comments={props.comments}
-        postId={props.postData.postId}
+        postId={props.postData.post_id}
       ></Comments>
       <Card.Body>
         <Form onSubmit={handleSubmit}>

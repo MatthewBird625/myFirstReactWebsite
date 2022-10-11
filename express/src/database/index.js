@@ -16,12 +16,21 @@ db.sequelize = new Sequelize(config.DB, config.USER, config.PASSWORD, {
 // Include models.
 db.user = require("./models/user.js")(db.sequelize, DataTypes);
 db.post = require("./models/post.js")(db.sequelize, DataTypes);
+db.comment = require("./models/comment.js")(db.sequelize, DataTypes);
 
 // Relate post and user.
 db.post.belongsTo(db.user, {
   foreignKey: { postingUser: "email", allowNull: false },
 });
 
+// Relate comment and a post.
+db.comment.belongsTo(db.post, {
+  foreignKey: { source_post_id: "post_id", allowNull: false },
+});
+// Relate comment and a post.
+db.comment.belongsTo(db.user, {
+  foreignKey: { postingUser: "email", allowNull: false },
+});
 //sync the database
 db.sync = async () => {
   // Sync schema.
