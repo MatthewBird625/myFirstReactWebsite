@@ -5,7 +5,6 @@ import { getUser, findUser } from "../data/repository";
 import "../Assets/CSS/Profile.css";
 
 const Profile = (props) => {
-  const userLocalStorage = getUser();
   const [user, setUser] = useState("");
 
   const navigate = useNavigate();

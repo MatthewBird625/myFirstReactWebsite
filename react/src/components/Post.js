@@ -17,6 +17,7 @@ const Post = (props) => {
   const commentRef = useRef(null);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
+  const [reload, setReload] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -31,6 +32,12 @@ const Post = (props) => {
       setSuccess("comment posted!");
       setComment({ ...comment, content: "" });
       props.reloadThePostsData();
+      if (reload === false) {
+        setReload(true);
+      } else {
+        setReload(false);
+      }
+      console.log(reload);
     } catch {
       setError("failed to post comment!");
     }
@@ -73,6 +80,7 @@ const Post = (props) => {
               ref={commentRef}
               value={comment.content}
               onChange={handleChange}
+              reload={reload}
             />
             <Form.Text className="text-muted"></Form.Text>
           </Form.Group>
