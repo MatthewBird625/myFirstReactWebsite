@@ -51,6 +51,19 @@ async function updatePassword(passwords) {
   );
 
   return response.data;
+} // --- POSTS ---------------------------------------------------------------------------------------
+async function getPosts() {
+  const response = await axios.get(API_HOST + "/api/posts");
+
+  return response.data;
+}
+
+async function createPost(post) {
+  console.log("made it to the create post");
+  const response = await axios.post(API_HOST + "/api/posts", post);
+  console.log("made response");
+
+  return response.data;
 }
 
 // --- Helper functions to interact with local storage --------------------------------------------
@@ -76,4 +89,6 @@ export {
   setUserLocal,
   updatePassword,
   deleteUser,
+  getPosts,
+  createPost,
 };
