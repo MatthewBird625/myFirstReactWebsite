@@ -11,11 +11,20 @@ exports.all = async (req, res) => {
 // Create a comment in mySQL
 exports.create = async (req, res) => {
   console.log(req.body.content);
-  const post = await db.comment.create({
+  const comment = await db.comment.create({
     text: req.body.content,
     postPostId: req.body.postId,
     userEmail: req.body.userEmail,
   });
 
-  res.json(post);
+  res.json(comment);
+};
+//deletes all comments of a post removing them as a constraint preventing post delete
+exports.deleteAll = async (req, res) => {
+  console.log("deleting comments");
+  const comments = await db.comment.destroy({
+    where: { postPostId: req.body.id },
+  });
+
+  res.json(comments);
 };

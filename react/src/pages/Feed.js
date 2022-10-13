@@ -23,15 +23,14 @@ const Feed = (props) => {
       setIsLoadingPosts(false);
     };
     fetchPosts().catch(console.error);
-    console.log("loading posts");
   }, [isLoadingPosts]);
 
-  //temporary front end PK generator for posts until back end is implemented
-  const [postCount, setPostCount] = useState(
-    localStorage.getItem("postCount")
-      ? JSON.parse(localStorage.getItem("postCount"))
-      : 0
-  );
+  const reloadPosts = async () => {
+    const result = await getPosts();
+
+    setPosts(result);
+    setIsLoadingPosts(false);
+  };
 
   return (
     <div>
@@ -48,8 +47,7 @@ const Feed = (props) => {
           ) : (
             posts.map((post) => (
               <Post
-                setPostCount={setPostCount}
-                postCount={postCount}
+                reloadPosts={reloadPosts}
                 postData={post}
                 currentUser={props.currentUser}
               />
