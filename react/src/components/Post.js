@@ -8,6 +8,12 @@ import { updatePost } from "../data/repository";
 
 const Post = (props) => {
   const [editMode, setEditMode] = useState(false);
+
+  //stores the default form content for resetting form content if the user cancels the edit mode
+  const [defaultFormContent, setDefaultFormContent] = useState(
+    props.postData.text
+  );
+
   const [form, setForm] = useState({
     content: props.postData.text,
     email: getUser().email,
@@ -27,11 +33,13 @@ const Post = (props) => {
     console.log("submitting edit");
     await updatePost(form);
     props.reloadPosts();
+    setDefaultFormContent(form.content);
     toggleEditMode();
   };
 
   //CONDITIONAL RENDERING OF EDIT BUTTONS BASED ON IF IT IS USERS POST
   const toggleEditMode = () => {
+    form.content = defaultFormContent;
     if (editMode === false) {
       setEditMode(true);
     } else {
@@ -103,6 +111,14 @@ const Post = (props) => {
               onClick={submitEditPost}
             >
               Submit
+            </Button>
+            <Button
+              className=""
+              variant="secondary"
+              type=""
+              onClick={toggleEditMode}
+            >
+              Back
             </Button>
           </Form>
         )}

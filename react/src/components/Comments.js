@@ -45,8 +45,8 @@ const Comments = (props) => {
     e.preventDefault();
 
     setError("");
-    if (comment.content.length < 1 || comment.content.length > 250) {
-      setError("comments must be between 1 and 250 characters");
+    if (comment.content.length < 1 || comment.content.length > 600) {
+      setError("comments must be between 1 and 600 characters");
       return;
     }
     try {
