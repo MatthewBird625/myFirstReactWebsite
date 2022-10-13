@@ -31,13 +31,12 @@ const Post = (props) => {
       createComment(comment);
       setSuccess("comment posted!");
       setComment({ ...comment, content: "" });
-      props.reloadThePostsData();
+      // props.reloadThePostsData();
       if (reload === false) {
         setReload(true);
       } else {
         setReload(false);
       }
-      console.log(reload);
     } catch {
       setError("failed to post comment!");
     }
@@ -58,6 +57,7 @@ const Post = (props) => {
         <Card.Text className="post-text">{props.postData.text}</Card.Text>
       </Card.Body>
       <Comments
+        reload={reload}
         comments={props.comments}
         postId={props.postData.post_id}
       ></Comments>

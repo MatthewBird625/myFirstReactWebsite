@@ -8,15 +8,15 @@ const Comments = (props) => {
   const [loadingComments, setLoadingComments] = useState(true);
 
   useEffect(() => {
-    const fetchPosts = async () => {
+    const fetchComments = async () => {
       const result = await getComments(props.postId);
 
       setPostComments(result);
       console.log(result);
       setLoadingComments(false);
     };
-    fetchPosts().catch(console.error);
-  }, []);
+    fetchComments().catch(console.error);
+  }, [props.reload]);
 
   return (
     <ListGroup className="list-group-flush">

@@ -133,6 +133,7 @@ const RegisterForm = (props) => {
 
         <Row>
           <Col>
+            {/* get by display value failed for this button so  get by test id is used */}
             <Button className="button-bigger" variant="primary" type="submit">
               Submit
             </Button>
@@ -150,7 +151,11 @@ const RegisterForm = (props) => {
             </Link>
           </Col>
         </Row>
-        {error && <Alert variant="danger">{error}</Alert>}
+        {error && (
+          <Alert id="error" variant="danger">
+            {error} hello
+          </Alert>
+        )}
         {success && <Alert variant="success">{success}</Alert>}
       </Form>
     </div>
