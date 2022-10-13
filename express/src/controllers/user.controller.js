@@ -2,6 +2,7 @@
 
 const db = require("../database");
 const argon2 = require("argon2");
+const { user } = require("../database");
 
 // Select all users from the database.
 exports.all = async (req, res) => {
@@ -41,4 +42,54 @@ exports.create = async (req, res) => {
   });
 
   res.json(user);
+};
+
+// update a user in the database.
+exports.update = async (req, res) => {
+  const user = await db.user.update(
+    {
+      // email: req.body.email,
+      name: req.body.name,
+      email: req.body.email,
+    },
+    {
+      where: { email: req.body.oldEmail },
+    }
+  );
+
+  res.json(user);
+};
+// delete a user in the database.
+exports.delete = async (req, res) => {
+  console.log(req.body.email);
+  const user = await db.user.destroy({
+    where: { email: req.body.email },
+  });
+
+  res.json(user);
+};
+
+// update a user password in the database.
+exports.password = async (req, res) => {
+  const userPassCheck = await db.user.findByPk(req.body.userEmail);
+  //checks if the old password matches the has in the database- returns false if check fails
+  const check = await argon2.verify(userPassCheck.password_hash, req.body.old);
+  if (!check) res.send(200, { result: false });
+
+  if (check) {
+    const hashNew = await argon2.hash(req.body.new, {
+      type: argon2.argon2id,
+    });
+
+    const user = await db.user.update(
+      {
+        password_hash: hashNew,
+      },
+      {
+        where: { email: req.body.userEmail },
+      }
+    );
+
+    res.json(user);
+  }
 };

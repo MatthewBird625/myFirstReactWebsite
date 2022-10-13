@@ -1,81 +1,24 @@
 import { Form, Row, Col, Button } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
+import { deleteUser, getUser } from "../data/repository";
 
 const DeleteUser = (props) => {
   const navigate = useNavigate();
 
-    useEffect(() => {
-      if (props.loginStatus !== true) {
-        navigate("/");
-      }
-    });
-
-
-  const [users, setUsers] = useState(
-    localStorage.getItem("users")
-      ? JSON.parse(localStorage.getItem("users"))
-      : []
-  );
-
-
-  const [posts, setPosts] = useState(
-    localStorage.getItem("posts")
-      ? JSON.parse(localStorage.getItem("posts"))
-      : []
-  );
-
-  const [comments, setComments] = useState(
-    localStorage.getItem("comments")
-      ? JSON.parse(localStorage.getItem("comments"))
-      : []
-  );
-
   useEffect(() => {
-    localStorage.setItem("users", JSON.stringify(users));
-    localStorage.setItem("comments", JSON.stringify(comments));
-    localStorage.setItem("posts", JSON.stringify(posts));
-   
-  }, [users]);
+    if (props.loginStatus !== true) {
+      navigate("/");
+    }
+  });
 
+  const [user, setUser] = useState(getUser());
 
   const handleSubmit = () => {
-    setUsers(()=>{
-      let newUsers = [...users]
-      newUsers = newUsers.filter(userFiltered => userFiltered.email !== props.currentUser)
-      console.log(newUsers)
-      
-
-      return newUsers;
-
-    })
-
-    setPosts(() => {
-      let newPosts = [...posts]
-      newPosts = newPosts.filter(postFiltered => postFiltered.userAccount !== props.currentUser)
-  
-      
-
-      return newPosts;
-
-    })
-    setComments(() => {
-      let newComments = [...comments]
-      newComments = newComments.filter(commentFiltered => commentFiltered.userAccount !== props.currentUser)
-  
-      
-
-      return newComments;
-
-    })
-
+    deleteUser(user);
     props.setLogin(false);
     props.logInUser("");
-    alert("account deleted!")
-
-    
-
-   
+    alert("account deleted!");
 
     return;
   };

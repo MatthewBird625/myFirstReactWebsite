@@ -2,21 +2,10 @@ import { useState, useRef, useEffect } from "react";
 
 import { Form, Row, Col, Button, Alert } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
+import { getUser, updatePassword } from "../data/repository";
 
 const PasswordEdit = (props) => {
-  const [users, setUsers] = useState(
-    localStorage.getItem("users")
-      ? JSON.parse(localStorage.getItem("users"))
-      : []
-  );
-
-  useEffect(() => {
-    localStorage.setItem("users", JSON.stringify(users));
-  }, [users]);
-
-  let user = users.find((userSearch) => userSearch.email === props.currentUser);
-
-  const originalPassword = user.password;
+  let user = getUser();
 
   const [oldPass, setOldPass] = useState("");
   const [newPass, setNewPass] = useState("");
@@ -34,7 +23,7 @@ const PasswordEdit = (props) => {
   const PASS_REGEX = new RegExp(
     "^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})"
   );
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     setError("");
     setSuccess("");
 
@@ -59,34 +48,27 @@ const PasswordEdit = (props) => {
       setError("new passwords don't match!");
       return;
     }
-    if (oldPass !== originalPassword) {
-      setError("incorrect account password!");
-      oldPassRef.current.focus();
-      return;
+
+    const passwords = {
+      old: oldPass,
+      new: newPass,
+      userEmail: user.email,
+    };
+    const change = await updatePassword(passwords);
+    console.log(change.result);
+
+    if (change.result !== false) {
+      setSuccess("password changed!");
+    } else {
+      setError("incorrect original password!");
     }
-
-    setUsers(() => {
-      let newUsers = [...users];
-
-      newUsers = newUsers.map((details) => {
-        if (details.email === props.currentUser) {
-          user.password = newPass;
-          return user;
-        } else {
-          return details;
-        }
-      });
-      console.log(newUsers);
-      return newUsers;
-    });
-    setSuccess("password changed!");
   };
 
   return (
     <div>
       <Form onSubmit={handleSubmit}>
         <Form.Group className="mb-3" controlId="formBasicEmail">
-          <Form.Label>oldPassword</Form.Label>
+          <Form.Label>old Password</Form.Label>
           <Form.Control
             type="password"
             ref={oldPassRef}
