@@ -50,6 +50,7 @@ const Feed = (props) => {
                 reloadPosts={reloadPosts}
                 postData={post}
                 currentUser={props.currentUser}
+                key={post.post_id}
               />
             ))
           )}

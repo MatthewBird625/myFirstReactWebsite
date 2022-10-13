@@ -13,6 +13,9 @@ module.exports = (express, app) => {
   // Create a new post.
   router.post("/deletePost", controller.delete);
 
+  // Create a new post.
+  router.post("/editPost", controller.edit);
+
   // Add routes to server.
   app.use("/api/posts", router);
 };

@@ -69,6 +69,13 @@ async function deletePost(id) {
 
   return response.data;
 }
+
+async function updatePost(newPost) {
+  console.log(newPost);
+  const response = await axios.post(API_HOST + "/api/posts/editPost", newPost);
+
+  return response.data;
+}
 // --- COMMENTS ---------------------------------------------------------------------------------------
 async function getComments(id) {
   const response = await axios.get(API_HOST + `/api/comments/select/${id}`);
@@ -117,4 +124,5 @@ export {
   createComment,
   deletePost,
   deleteComments,
+  updatePost,
 };
