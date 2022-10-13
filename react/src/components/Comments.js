@@ -1,22 +1,39 @@
-import { ListGroupItem, ListGroup} from "react-bootstrap";
-import Comment from "./Comment";
-const Comments= (props) => {
+import { ListGroupItem, ListGroup } from "react-bootstrap";
+import { useEffect, useState } from "react";
 
+import { getComments } from "../data/repository";
 
-    let postComments = props.comments.filter((comment) => comment.postId === props.postId)
- 
+const Comments = (props) => {
+  const [postComments, setPostComments] = useState("");
+  const [loadingComments, setLoadingComments] = useState(true);
 
+  useEffect(() => {
+    const fetchPosts = async () => {
+      const result = await getComments(props.postId);
 
-  
-     
-    return <ListGroup className="list-group-flush">
+      setPostComments(result);
+      console.log(result);
+      setLoadingComments(false);
+    };
+    fetchPosts().catch(console.error);
+  }, []);
 
-{postComments.map((comment)=>(<ListGroupItem><Comment comment= {comment} postId = {props.postId}/></ListGroupItem> ))}
-
- 
+  return (
+    <ListGroup className="list-group-flush">
+      {loadingComments ? (
+        <p>loading comments</p>
+      ) : (
+        postComments.map((comment) => (
+          <ListGroupItem>
+            <p>
+              <strong>{comment.userEmail}: </strong>
+              {comment.text}
+            </p>
+          </ListGroupItem>
+        ))
+      )}
     </ListGroup>
-
-    
-}
+  );
+};
 
 export default Comments;

@@ -56,7 +56,11 @@ const LoginForm = (props) => {
     }
     const userExists = await verifyUser(user.email, user.password);
     if (userExists !== null) {
-      logInUser(user.email);
+      try {
+        logInUser(user.email);
+      } catch {
+        setError("unable to connect to the database");
+      }
     } else {
       setError("incorrect username or password!");
     }

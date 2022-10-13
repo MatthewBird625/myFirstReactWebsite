@@ -65,6 +65,20 @@ async function createPost(post) {
 
   return response.data;
 }
+// --- COMMENTS ---------------------------------------------------------------------------------------
+async function getComments(id) {
+  const response = await axios.get(API_HOST + `/api/comments/select/${id}`);
+
+  return response.data;
+}
+
+async function createComment(comment) {
+  console.log("made it to the create post");
+  const response = await axios.post(API_HOST + "/api/comments", comment);
+  console.log("made response");
+
+  return response.data;
+}
 
 // --- Helper functions to interact with local storage --------------------------------------------
 function setUserLocal(user) {
@@ -91,4 +105,6 @@ export {
   deleteUser,
   getPosts,
   createPost,
+  getComments,
+  createComment,
 };
