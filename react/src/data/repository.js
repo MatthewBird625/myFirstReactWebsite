@@ -44,7 +44,6 @@ async function deleteUser(user) {
 }
 
 async function updatePassword(passwords) {
-  console.log(passwords);
   const response = await axios.post(
     API_HOST + `/api/users/password/`,
     passwords
@@ -59,9 +58,7 @@ async function getPosts() {
 }
 
 async function createPost(post) {
-  console.log("made it to the create post");
   const response = await axios.post(API_HOST + "/api/posts", post);
-  console.log("made response");
 
   return response.data;
 }
@@ -73,9 +70,7 @@ async function getComments(id) {
 }
 
 async function createComment(comment) {
-  console.log("made it to the create post");
   const response = await axios.post(API_HOST + "/api/comments", comment);
-  console.log("made response");
 
   return response.data;
 }

@@ -1,23 +1,13 @@
 import { Container, Row, Col, Form, Button, Alert } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
-import { useNavigate } from "react-router-dom";
-
 import "../Assets/CSS/Button.css";
 import "../Assets/CSS/PostPage.css";
 import "../Assets/CSS/view.css";
-import { useRef, useState, useEffect } from "react";
+import { useRef, useState } from "react";
 import { getUser, createPost } from "../data/repository";
 
 const PostPage = (props) => {
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    if (props.login !== true) {
-      navigate("/");
-    }
-  }, []);
-
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
   const contentRef = useRef(null);

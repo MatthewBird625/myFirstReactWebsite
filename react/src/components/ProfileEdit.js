@@ -25,12 +25,6 @@ const ProfileEdit = (props) => {
     oldEmail: "",
   });
 
-  useEffect(() => {
-    if (getUser() === null) {
-      navigate("/");
-    }
-  });
-
   //fetch our user profile data with a use effect
 
   useEffect(() => {
@@ -39,7 +33,7 @@ const ProfileEdit = (props) => {
       setUser(result);
       setUserInput(result);
     };
-    fetchUser().catch(console.error);
+    fetchUser();
   }, []);
 
   //   email regex from : https://emailregex.com/

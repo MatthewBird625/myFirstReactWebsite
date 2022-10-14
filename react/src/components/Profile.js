@@ -1,20 +1,11 @@
 import { Card, Button, Table } from "react-bootstrap";
-import { useState, useEffect, useRef } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import { getUser, findUser } from "../data/repository";
 import "../Assets/CSS/Profile.css";
 
 const Profile = (props) => {
-  const userLocalStorage = getUser();
   const [user, setUser] = useState("");
-
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    if (getUser() === null) {
-      navigate("/");
-    }
-  });
 
   //fetch our user profile data with a use effect
 
@@ -50,7 +41,7 @@ const Profile = (props) => {
             </thead>
             <tbody>
               <tr>
-                <td>{user.name}</td>
+                <td data-testid="profile-username">{user.name}</td>
               </tr>
             </tbody>
           </Table>
