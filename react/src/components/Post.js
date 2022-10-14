@@ -5,6 +5,7 @@ import { deletePost, deleteComments, getUser } from "../data/repository";
 import { Form, Button } from "react-bootstrap";
 import Comments from "./Comments";
 import { updatePost } from "../data/repository";
+import Reaction from "./Reaction";
 
 const Post = (props) => {
   const [editMode, setEditMode] = useState(false);
@@ -86,6 +87,7 @@ const Post = (props) => {
         {!editMode && (
           <Card.Text className="post-text">{props.postData.text}</Card.Text>
         )}
+        <Reaction postId={props.postData.post_id} />
         {editMode && (
           <Form>
             <Form.Group

@@ -1,0 +1,14 @@
+.reaction{
+    font-size: 25px;
+    color: white;
+    border-style: hidden;
+    background-color: white;
+    width: 50px;
+    border-radius: 25px;
+}
+
+
+.reaction-count{
+    text-align: center;
+}
+

@@ -64,14 +64,12 @@ async function createPost(post) {
 }
 
 async function deletePost(id) {
-  console.log(id);
   const response = await axios.post(API_HOST + "/api/posts/deletePost", id);
 
   return response.data;
 }
 
 async function updatePost(newPost) {
-  console.log(newPost);
   const response = await axios.post(API_HOST + "/api/posts/editPost", newPost);
 
   return response.data;
@@ -91,6 +89,36 @@ async function createComment(comment) {
 
 async function deleteComments(id) {
   const response = await axios.post(API_HOST + "/api/comments/deleteAll", id);
+
+  return response.data;
+}
+// --- REACTIONS ---------------------------------------------------------------------------------------
+async function createReaction(reaction) {
+  const response = await axios.post(API_HOST + "/api/reactions", reaction);
+
+  return response.data;
+}
+
+async function deleteReaction(reaction) {
+  const response = await axios.post(
+    API_HOST + "/api/reactions/delete",
+    reaction
+  );
+
+  return response.data;
+}
+
+async function doesReactionExist(postId, userEmail) {
+  const response = await axios.get(API_HOST + "/api/reactions/exist", {
+    params: { postId, userEmail },
+  });
+  const reaction = response.data;
+
+  return reaction;
+}
+
+async function getReactions(id) {
+  const response = await axios.get(API_HOST + `/api/reactions/select/${id}`);
 
   return response.data;
 }
@@ -125,4 +153,8 @@ export {
   deletePost,
   deleteComments,
   updatePost,
+  createReaction,
+  doesReactionExist,
+  deleteReaction,
+  getReactions,
 };

@@ -17,6 +17,7 @@ db.sequelize = new Sequelize(config.DB, config.USER, config.PASSWORD, {
 db.user = require("./models/user.js")(db.sequelize, DataTypes);
 db.post = require("./models/post.js")(db.sequelize, DataTypes);
 db.comment = require("./models/comment.js")(db.sequelize, DataTypes);
+db.reaction = require("./models/reaction.js")(db.sequelize, DataTypes);
 
 // Relate post and user.
 db.post.belongsTo(db.user, {
@@ -30,6 +31,15 @@ db.comment.belongsTo(db.post, {
 // Relate comment and a post.
 db.comment.belongsTo(db.user, {
   foreignKey: { postingUser: "email", allowNull: false },
+});
+// Relate reaction and a user
+db.reaction.belongsTo(db.user, {
+  foreignKey: { postingUser: "email", allowNull: false },
+});
+
+// Relate reaction and a post.
+db.reaction.belongsTo(db.post, {
+  foreignKey: { source_post_id: "post_id", allowNull: false },
 });
 //sync the database
 db.sync = async () => {
