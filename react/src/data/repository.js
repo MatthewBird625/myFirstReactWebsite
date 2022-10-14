@@ -62,6 +62,20 @@ async function createPost(post) {
 
   return response.data;
 }
+
+async function deletePost(id) {
+  console.log(id);
+  const response = await axios.post(API_HOST + "/api/posts/deletePost", id);
+
+  return response.data;
+}
+
+async function updatePost(newPost) {
+  console.log(newPost);
+  const response = await axios.post(API_HOST + "/api/posts/editPost", newPost);
+
+  return response.data;
+}
 // --- COMMENTS ---------------------------------------------------------------------------------------
 async function getComments(id) {
   const response = await axios.get(API_HOST + `/api/comments/select/${id}`);
@@ -71,6 +85,12 @@ async function getComments(id) {
 
 async function createComment(comment) {
   const response = await axios.post(API_HOST + "/api/comments", comment);
+
+  return response.data;
+}
+
+async function deleteComments(id) {
+  const response = await axios.post(API_HOST + "/api/comments/deleteAll", id);
 
   return response.data;
 }
@@ -102,4 +122,7 @@ export {
   createPost,
   getComments,
   createComment,
+  deletePost,
+  deleteComments,
+  updatePost,
 };

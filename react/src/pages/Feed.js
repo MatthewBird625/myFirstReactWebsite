@@ -8,7 +8,6 @@ const Feed = (props) => {
   const navigate = useNavigate();
   const [posts, setPosts] = useState("");
   const [isLoadingPosts, setIsLoadingPosts] = useState(true);
-  const [reload, setReload] = useState(false);
 
   useEffect(() => {
     if (props.login !== true) {
@@ -24,29 +23,15 @@ const Feed = (props) => {
       setIsLoadingPosts(false);
     };
     fetchPosts().catch(console.error);
-    console.log("loading posts");
   }, [isLoadingPosts]);
 
-  const [comments, setComments] = useState(
-    localStorage.getItem("comments")
-      ? JSON.parse(localStorage.getItem("comments"))
-      : []
-  );
+  const reloadPosts = async () => {
+    const result = await getPosts();
 
-  //temporary front end PK generator for posts until back end is implemented
-  const [postCount, setPostCount] = useState(
-    localStorage.getItem("postCount")
-      ? JSON.parse(localStorage.getItem("postCount"))
-      : 0
-  );
-  const reloadThePostsData = () => {
-    console.log("TOGGLE");
-    if (isLoadingPosts === false) {
-      setIsLoadingPosts(true);
-    } else {
-      setIsLoadingPosts(false);
-    }
+    setPosts(result);
+    setIsLoadingPosts(false);
   };
+
   return (
     <div>
       <Row>
@@ -62,13 +47,10 @@ const Feed = (props) => {
           ) : (
             posts.map((post) => (
               <Post
-                setPostCount={setPostCount}
-                postCount={postCount}
+                reloadPosts={reloadPosts}
                 postData={post}
-                comments={comments}
-                setComments={setComments}
                 currentUser={props.currentUser}
-                reloadThePostsData={reloadThePostsData}
+                key={post.post_id}
               />
             ))
           )}
