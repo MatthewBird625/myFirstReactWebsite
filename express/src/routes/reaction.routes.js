@@ -14,6 +14,9 @@ module.exports = (express, app) => {
   // find a reaction if it already exists
   router.get("/exist", controller.exist);
 
+  //delete comments
+  router.post("/deleteAll", controller.deleteAll);
+
   // Add routes to server.
   app.use("/api/reactions", router);
 };

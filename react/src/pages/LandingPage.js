@@ -3,6 +3,7 @@ import EmployeeReminder from "../components/EmployeeReminder";
 import mainLogo from "../img/logo.png";
 import { Outlet } from "react-router-dom";
 import "../Assets/CSS/view.css";
+import "../Assets/CSS/style.css";
 
 const LandingPage = () => {
   return (
@@ -16,7 +17,7 @@ const LandingPage = () => {
         </Col>
 
         {/* PAGE RIGHT */}
-        <Col sm={5}>
+        <Col id="form" sm={5}>
           {}
           <Outlet />
         </Col>

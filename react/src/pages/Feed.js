@@ -3,6 +3,7 @@ import { Col, Row } from "react-bootstrap";
 import Post from "../components/Post";
 import { useNavigate } from "react-router-dom";
 import { getPosts } from "../data/repository";
+import "../Assets/CSS/Post.css";
 
 const Feed = (props) => {
   const navigate = useNavigate();
@@ -31,13 +32,21 @@ const Feed = (props) => {
     setPosts(result);
     setIsLoadingPosts(false);
   };
+  const reloadThePostsData = () => {
+    console.log("TOGGLE");
+    if (isLoadingPosts === false) {
+      setIsLoadingPosts(true);
+    } else {
+      setIsLoadingPosts(false);
+    }
+  };
 
   return (
     <div>
       <Row>
         <Col></Col>
         {/* CENTER COLUMN */}
-        <Col sm={10} md={8}>
+        <Col className="feed-center" sm={10} md={8}>
           <h1>Your feed:</h1>
           {/* loading control logic below is based on lab08- registration and login example forum file */}
           {isLoadingPosts ? (

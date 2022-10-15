@@ -1,7 +1,15 @@
 .post{
-
+    display: flex;
     margin: 5vh 5vw;
+    padding: 0px;
+    width: 60%;
+    margin-left: auto;
+    margin-right:auto;
+    border-radius: 25px;
+   
+
 }
+
 
 h1, h3{
     text-align: center;
@@ -10,4 +18,45 @@ h1, h3{
 .button{
      width: 50%;
      margin: auto;
+}
+
+.post-image{
+    margin: 20px;
+    width: 35vw;
+    margin-left: auto;
+    margin-right: auto;
+    border-radius: 15px;
+    
+}
+
+.feed-center{
+    margin-left: auto;
+    margin-right:auto
+}
+
+.post-user-content{
+    margin:0px;
+    padding: 0px;
+    margin-top: 5px;
+    
+
+}
+.post-username{
+    margin: 0px;
+    padding: 5px;
+    padding-left: 15px;
+
+}
+
+.post-text{
+    border-bottom: 1px solid rgba(136, 136, 136, 0.432);
+    padding: 10px 0px;
+    margin-bottom: 10px;
+    
+}
+
+.post-button{
+    width: 20%;
+    margin: 10px 10px  10px 5px;
+    
 }

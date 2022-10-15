@@ -4,6 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { verifyUser, setUser } from "../data/repository";
 
 import "../Assets/CSS/Button.css";
+import "../Assets/CSS/Login.css";
 const LoginForm = (props) => {
   const [user, setUser] = useState({
     email: "",
@@ -34,7 +35,7 @@ const LoginForm = (props) => {
     props.logInUser(email);
     console.log("loggin in!");
     setUser(email);
-    navigate("/profile");
+    navigate("/");
   };
 
   const handleSubmit = async (e) => {

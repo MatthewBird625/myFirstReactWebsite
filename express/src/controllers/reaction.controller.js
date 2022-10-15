@@ -44,3 +44,13 @@ exports.all = async (req, res) => {
   });
   res.json(reactions);
 };
+
+//deletes all reactions of a post removing them as a constraint preventing post delete
+exports.deleteAll = async (req, res) => {
+  console.log("deleting reactions");
+  const reactions = await db.reaction.destroy({
+    where: { postPostId: req.body.id },
+  });
+
+  res.json(reactions);
+};

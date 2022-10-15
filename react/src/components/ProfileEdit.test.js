@@ -4,6 +4,9 @@ import ProfileEdit from "./ProfileEdit";
 
 let container;
 let view;
+//I couldn't figure out how to overide the useEffect trying to fetch data from the API- test just goes forever.
+//So I have commented it out.
+
 // beforeEach(() => {
 //   // eslint-disable-next-line testing-library/no-render-in-setup
 //   view = render(

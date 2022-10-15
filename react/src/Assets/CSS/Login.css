@@ -1,0 +1,34 @@
+#form {
+    margin-left: -25px;
+    background-color: #fff;
+    border: 1px solid;
+    border-color: rgb(160, 160, 160);
+    border-radius: 15px;
+  padding: 10px;
+  box-shadow: 5px 5px 5px 5px #747474;
+ 
+}
+
+.sign-in-heading{
+    color: grey;
+    text-align: center;
+
+    padding-top: 2vh;
+}
+.left-padding{
+    padding-left: 3vw;
+}
+
+.login-padding-top{
+    padding-top: 10vh;
+}
+
+.login-padding{
+    padding-top: 15vh;
+}
+
+.company-policy-text{
+    color: grey;
+    text-align: center;
+    padding-top: 50px;
+}

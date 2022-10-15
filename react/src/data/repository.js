@@ -58,6 +58,7 @@ async function getPosts() {
 }
 
 async function createPost(post) {
+  console.log(post);
   const response = await axios.post(API_HOST + "/api/posts", post);
 
   return response.data;
@@ -123,6 +124,12 @@ async function getReactions(id) {
   return response.data;
 }
 
+async function deleteReactions(id) {
+  const response = await axios.post(API_HOST + "/api/reactions/deleteAll", id);
+
+  return response.data;
+}
+
 // --- Helper functions to interact with local storage --------------------------------------------
 function setUserLocal(user) {
   localStorage.setItem(USER_KEY, JSON.stringify(user));
@@ -157,4 +164,5 @@ export {
   doesReactionExist,
   deleteReaction,
   getReactions,
+  deleteReactions,
 };

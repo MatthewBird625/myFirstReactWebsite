@@ -16,3 +16,13 @@
     margin-left: 1.5vw;
 }
 
+
+.make-post{
+    background-color: white;
+    border: 1px solid;
+    border-color: rgb(160, 160, 160);
+    border-radius: 15px;
+  padding: 10px;
+  box-shadow: 5px 5px 5px 5px #747474;
+    
+}

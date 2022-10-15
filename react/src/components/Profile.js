@@ -26,7 +26,7 @@ const Profile = (props) => {
   date = day + "/" + month + "/" + year;
 
   return (
-    <Card>
+    <Card id="profile">
       <Card.Header>Profile</Card.Header>
       <Card.Subtitle className="mb-2 text-muted padded-date">
         join date: {date}
