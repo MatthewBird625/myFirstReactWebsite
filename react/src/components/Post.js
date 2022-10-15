@@ -6,6 +6,8 @@ import { Form, Button } from "react-bootstrap";
 import Comments from "./Comments";
 import { updatePost } from "../data/repository";
 import Reaction from "./Reaction";
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.bubble.css";
 
 const Post = (props) => {
   const [editMode, setEditMode] = useState(false);
@@ -85,7 +87,11 @@ const Post = (props) => {
           {props.postData.userEmail}
         </Card.Title>
         {!editMode && (
-          <Card.Text className="post-text">{props.postData.text}</Card.Text>
+          <ReactQuill
+            value={props.postData.text}
+            readOnly={true}
+            theme={"bubble"}
+          />
         )}
         <Reaction postId={props.postData.post_id} />
         {editMode && (

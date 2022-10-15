@@ -6,6 +6,8 @@ import "../Assets/CSS/PostPage.css";
 import "../Assets/CSS/view.css";
 import { useRef, useState } from "react";
 import { getUser, createPost } from "../data/repository";
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.snow.css";
 
 const PostPage = (props) => {
   const [error, setError] = useState("");
@@ -18,6 +20,8 @@ const PostPage = (props) => {
     email: getUser().email,
   });
 
+  const [value, setValue] = useState("");
+
   // handle change and handleSubmit is based off the solution presented in the RMIT FWP WEEK 5 LAB with some modifications
   const handleChange = (field) => (event) => {
     setForm((form) => ({ ...form, [field]: event.target.value }));
@@ -26,11 +30,12 @@ const PostPage = (props) => {
   };
 
   const handleSubmit = async (e) => {
+    setForm({ ...form, content: value });
     e.preventDefault();
     setSuccess("");
     setError("");
 
-    if (form.content.length < 1 || form.content.length > 250) {
+    if (value.length < 1 || value.length > 250) {
       setError("content must be between 1 and 250 characters");
       return;
     }
@@ -82,13 +87,13 @@ const PostPage = (props) => {
               />
               <Form.Text className="text-muted">upload image</Form.Text>
             </Form.Group>
-            <Form.Group
+            {/* <Form.Group
               className="mb-3"
               controlId="formBasicontent"
               value={form.content}
               onChange={handleChange("content")}
             >
-              <Form.Label></Form.Label>
+              <Form.Label>your post</Form.Label>
               <Form.Control
                 as="textarea"
                 rows="5"
@@ -97,8 +102,8 @@ const PostPage = (props) => {
                 ref={contentRef}
               />
               <Form.Text className="text-muted"></Form.Text>
-            </Form.Group>
-
+            </Form.Group> */}
+            <ReactQuill theme="snow" value={value} onChange={setValue} />
             <Row>
               <Col>
                 <Button
