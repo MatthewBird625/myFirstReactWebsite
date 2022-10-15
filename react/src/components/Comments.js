@@ -56,7 +56,7 @@ const Comments = (props) => {
       setSuccess("comment posted!");
       setComment({ ...comment, content: "" });
       refreshComments();
-      // props.reloadThePostsData();
+
       if (reload === false) {
         setReload(true);
       } else {
@@ -65,6 +65,7 @@ const Comments = (props) => {
     } catch {
       setError("failed to post comment!");
     }
+    props.reloadPosts();
   };
 
   const handleChange = (field) => (event) => {

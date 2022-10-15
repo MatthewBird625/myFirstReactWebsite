@@ -19,7 +19,7 @@ const PostPage = (props) => {
     content: "",
     email: getUser().email,
   });
-
+  //value for React Quill box
   const [value, setValue] = useState("");
 
   // handle change and handleSubmit is based off the solution presented in the RMIT FWP WEEK 5 LAB with some modifications
@@ -87,22 +87,7 @@ const PostPage = (props) => {
               />
               <Form.Text className="text-muted">upload image</Form.Text>
             </Form.Group>
-            {/* <Form.Group
-              className="mb-3"
-              controlId="formBasicontent"
-              value={form.content}
-              onChange={handleChange("content")}
-            >
-              <Form.Label>your post</Form.Label>
-              <Form.Control
-                as="textarea"
-                rows="5"
-                type="text"
-                placeholder=""
-                ref={contentRef}
-              />
-              <Form.Text className="text-muted"></Form.Text>
-            </Form.Group> */}
+
             <ReactQuill theme="snow" value={value} onChange={setValue} />
             <Row>
               <Col>
