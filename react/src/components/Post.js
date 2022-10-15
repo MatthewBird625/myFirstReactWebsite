@@ -1,7 +1,12 @@
 import { useState, useEffect } from "react";
 import Card from "react-bootstrap/Card";
 import "../Assets/CSS/Post.css";
-import { deletePost, deleteComments, getUser } from "../data/repository";
+import {
+  deletePost,
+  deleteComments,
+  getUser,
+  deleteReactions,
+} from "../data/repository";
 import { Form, Button } from "react-bootstrap";
 import Comments from "./Comments";
 import { updatePost } from "../data/repository";
@@ -32,13 +37,13 @@ const Post = (props) => {
       const result = await updatePost(form);
     };
     updatePostEffect();
-    props.reloadPosts();
-  }, [form, props]);
+  }, [form]);
 
   //API CALLS
   const postDelete = async (id) => {
     const deleteId = { id: id };
     await deleteComments(deleteId);
+    await deleteReactions(deleteId);
     await deletePost(deleteId);
     props.reloadPosts();
   };
@@ -46,7 +51,6 @@ const Post = (props) => {
   const submitEditPost = async (event) => {
     event.preventDefault();
     setForm({ ...form, content: value });
-
     console.log("submitting edit");
     setDefaultFormContent(form.content);
     toggleEditMode();
@@ -147,7 +151,6 @@ const Post = (props) => {
       {!editMode && button}
 
       <Comments
-        reloadPosts={props.realoadPosts}
         postId={props.postData.post_id}
         currentUser={props.currentUser}
       ></Comments>

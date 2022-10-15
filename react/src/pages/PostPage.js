@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import "../Assets/CSS/Button.css";
 import "../Assets/CSS/PostPage.css";
 import "../Assets/CSS/view.css";
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import { getUser, createPost } from "../data/repository";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
@@ -12,7 +12,6 @@ import "react-quill/dist/quill.snow.css";
 const PostPage = (props) => {
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
-  const contentRef = useRef(null);
 
   const [imageUpload, setImageUpload] = useState(null);
   const [form, setForm] = useState({
@@ -21,6 +20,16 @@ const PostPage = (props) => {
   });
   //value for React Quill box
   const [value, setValue] = useState("");
+
+  useEffect(() => {
+    const createPostEffect = async () => {
+      const result = await createPost(form);
+    };
+    if (value.length < 1 || value.length > 250) {
+    } else {
+      createPostEffect();
+    }
+  }, [form]);
 
   // handle change and handleSubmit is based off the solution presented in the RMIT FWP WEEK 5 LAB with some modifications
   const handleChange = (field) => (event) => {
@@ -39,7 +48,7 @@ const PostPage = (props) => {
       setError("content must be between 1 and 250 characters");
       return;
     }
-    createPost(form);
+
     setSuccess("post created!");
   };
 
@@ -47,7 +56,7 @@ const PostPage = (props) => {
     <Container fluid>
       <Row className="min-view post">
         <Col></Col>
-        <Col sm={8} md={6}>
+        <Col className="make-post" sm={8} md={6}>
           {/* Dummy placeg=holder for now- TODO replace with company logo */}
           <h1 className="heading">Make a Post</h1>
           {imageUpload && (
@@ -69,12 +78,7 @@ const PostPage = (props) => {
           )}
 
           <Form onSubmit={handleSubmit}>
-            <Form.Group
-              className="mb-3"
-              controlId="formBasicontent"
-              value={form.content}
-              onChange={handleChange("content")}
-            >
+            <Form.Group className="mb-3" controlId="formBasicontent">
               <Form.Label></Form.Label>
               <Form.Control
                 type="file"

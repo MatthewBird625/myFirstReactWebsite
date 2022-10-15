@@ -19,7 +19,7 @@ const Comments = (props) => {
 
   const [postComments, setPostComments] = useState("");
   const [loadingComments, setLoadingComments] = useState(true);
-  const [reload, setReload] = useState(false);
+
   const commentRef = useRef(null);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
@@ -33,7 +33,7 @@ const Comments = (props) => {
       setLoadingComments(false);
     };
     fetchComments().catch(console.error);
-  }, []);
+  }, [props.postId]);
 
   const refreshComments = async () => {
     const result = await getComments(props.postId);
@@ -56,16 +56,10 @@ const Comments = (props) => {
       setSuccess("comment posted!");
       setComment({ ...comment, content: "" });
       refreshComments();
-
-      if (reload === false) {
-        setReload(true);
-      } else {
-        setReload(false);
-      }
     } catch {
       setError("failed to post comment!");
     }
-    props.reloadPosts();
+    refreshComments();
   };
 
   const handleChange = (field) => (event) => {
@@ -107,7 +101,6 @@ const Comments = (props) => {
             ref={commentRef}
             value={comment.content}
             onChange={handleChange}
-            reload={reload}
           />
           <Form.Text className="text-muted"></Form.Text>
         </Form.Group>

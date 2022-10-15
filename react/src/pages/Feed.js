@@ -32,6 +32,14 @@ const Feed = (props) => {
     setPosts(result);
     setIsLoadingPosts(false);
   };
+  const reloadThePostsData = () => {
+    console.log("TOGGLE");
+    if (isLoadingPosts === false) {
+      setIsLoadingPosts(true);
+    } else {
+      setIsLoadingPosts(false);
+    }
+  };
 
   return (
     <div>
