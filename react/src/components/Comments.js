@@ -6,6 +6,8 @@ import Form from "react-bootstrap/Form";
 import { getComments } from "../data/repository";
 import { createComment } from "../data/repository";
 
+import "../Assets/CSS/Comments.css";
+
 const Comments = (props) => {
   //variables
 
@@ -70,7 +72,7 @@ const Comments = (props) => {
   };
 
   return (
-    <div>
+    <div className="comments-section">
       <ListGroup className="list-group-flush">
         {loadingComments ? (
           <p>loading comments</p>
@@ -87,7 +89,7 @@ const Comments = (props) => {
       </ListGroup>
 
       <Form onSubmit={handleSubmit}>
-        <h3> leave a comment</h3>
+        <h4 class="center"> leave a comment</h4>
 
         <Form.Group
           className="mb-3"

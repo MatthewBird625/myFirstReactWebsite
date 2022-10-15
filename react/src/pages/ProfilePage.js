@@ -4,6 +4,7 @@ import { Outlet, useNavigate } from "react-router-dom";
 
 import "../Assets/CSS/Button.css";
 import "../Assets/CSS/view.css";
+import "../Assets/CSS/Profile.css";
 const ProfilePage = (props) => {
   const navigate = useNavigate();
 
@@ -13,9 +14,9 @@ const ProfilePage = (props) => {
 
   return (
     <Container>
-      <Row className="px-4 my-5 min-view">
+      <Row className="px-2 my-2 min-view">
         {/* PAGE LEFT:  */}
-        <Col sm={5}>
+        <Col className="profile-image" sm={5}>
           {/* Dummy placeg=holder for now- TODO replace with company logo */}
           <Image src={profile} fluid rounded className="" width="300" />
           {/* image generated from https://smashinglogo.com/ and used for non for profit educational purposes */}

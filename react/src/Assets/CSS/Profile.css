@@ -1,3 +1,28 @@
 .padded-date{
     padding:10px;
 }
+
+#profile {
+    margin-left: -25px;
+    background-color: #fff;
+    border: 1px solid;
+    border-color: rgb(160, 160, 160);
+    border-radius: 15px;
+  box-shadow: 5px 5px 5px 5px #747474;
+ 
+}
+
+.profile-image{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: white;
+    border-radius: 15px;
+    height: 57vh;
+    width: 25vw;
+    margin-right: 100px;
+    box-shadow: 5px 5px 5px 5px #747474;
+  
+
+
+}

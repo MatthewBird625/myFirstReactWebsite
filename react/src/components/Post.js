@@ -8,7 +8,7 @@ import { updatePost } from "../data/repository";
 import Reaction from "./Reaction";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.bubble.css";
-
+import "../Assets/CSS/Post.css";
 const Post = (props) => {
   const [editMode, setEditMode] = useState(false);
 
@@ -79,21 +79,26 @@ const Post = (props) => {
   };
 
   return (
-    <Card className="post">
+    <Card className="post feed-background">
       {/* points to a random photo for now. Will be updated with the picture from the back end when implemented */}
-      <Card.Img variant="top" src="https://picsum.photos/640/480" />
-      <Card.Body>
+      <Card.Img
+        className="post-image"
+        variant="top"
+        src="https://picsum.photos/640/480"
+      />
+      <Card.Body className="post-user-content">
         <Card.Title className="post-username">
           {props.postData.userEmail}
         </Card.Title>
         {!editMode && (
           <ReactQuill
+            className="post-text"
             value={props.postData.text}
             readOnly={true}
             theme={"bubble"}
           />
         )}
-        <Reaction postId={props.postData.post_id} />
+
         {editMode && (
           <Form>
             <Form.Group
@@ -103,12 +108,10 @@ const Post = (props) => {
               onChange={handleChange("content")}
             >
               <Form.Label></Form.Label>
-              <Form.Control
-                as="textarea"
-                rows="5"
-                type="text"
-                placeholder=""
-                defaultValue={form.content}
+              <ReactQuill
+                className="post-text"
+                value={props.postData.text}
+                theme={"snow"}
               />
               <Form.Text className="text-muted"></Form.Text>
             </Form.Group>{" "}
@@ -131,6 +134,7 @@ const Post = (props) => {
           </Form>
         )}
       </Card.Body>
+      <Reaction postId={props.postData.post_id} />
       {!editMode && button}
 
       <Comments
