@@ -36,7 +36,11 @@ const Post = (props) => {
     const updatePostEffect = async () => {
       const result = await updatePost(form);
     };
-    updatePostEffect();
+    if (value !== defaultFormContent) {
+      console.log("update triggered");
+      updatePostEffect();
+      props.reloadPosts();
+    }
   }, [form]);
 
   //API CALLS
@@ -55,6 +59,7 @@ const Post = (props) => {
     setDefaultFormContent(form.content);
     toggleEditMode();
     props.reloadPosts();
+    props.postData.text = value;
   };
 
   //CONDITIONAL RENDERING OF EDIT BUTTONS BASED ON IF IT IS USERS POST

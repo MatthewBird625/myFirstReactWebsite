@@ -71,6 +71,7 @@ async function deletePost(id) {
 }
 
 async function updatePost(newPost) {
+  console.log(newPost);
   const response = await axios.post(API_HOST + "/api/posts/editPost", newPost);
 
   return response.data;
