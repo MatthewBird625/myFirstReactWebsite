@@ -2,7 +2,7 @@
 module.exports = (express, app) => {
   const controller = require("../controllers/user.controller.js");
   const router = express.Router();
-
+  //see the API in the repository pointing to these routes to understand their purpose(there are some comments in the repo if their purpose is beyond basic)
   // Select all users.
   router.get("/", controller.all);
 

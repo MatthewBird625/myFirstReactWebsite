@@ -21,9 +21,11 @@ const DeleteUser = (props) => {
   const [user, setUser] = useState(getUser());
 
   const handleSubmit = () => {
+    //deletes all other models relating to the user(stops foreign keys from preventing user delete)
     deleteUserReactions(user);
     deleteUserComments(user);
     deleteUserPosts(user);
+    //then actually delete the user
     deleteUser(user);
 
     props.setLogin(false);

@@ -61,7 +61,7 @@ const Post = (props) => {
     props.postData.text = value;
   };
 
-  //CONDITIONAL RENDERING OF EDIT BUTTONS BASED ON IF IT IS USERS POST
+  // allows for setting edit mode
   const toggleEditMode = () => {
     form.content = defaultFormContent;
     if (editMode === false) {
@@ -70,6 +70,7 @@ const Post = (props) => {
       setEditMode(false);
     }
   };
+  //CONDITIONAL RENDERING OF EDIT BUTTONS BASED ON IF IT IS USERS POST
   let button = <div></div>;
   if (props.postData.userEmail === getUser().email)
     button = (

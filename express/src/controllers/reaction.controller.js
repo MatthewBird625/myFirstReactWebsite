@@ -27,6 +27,7 @@ exports.delete = async (req, res) => {
   res.json(reaction);
 };
 
+//finds if a reaction exists
 exports.exist = async (req, res) => {
   const reaction = await db.reaction.findAll({
     where: { postPostId: req.query.postId, userEmail: req.query.userEmail },

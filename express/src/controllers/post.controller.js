@@ -28,7 +28,7 @@ exports.delete = async (req, res) => {
   res.json(post);
 };
 
-// edit in the database.
+// edit post in the database.
 exports.edit = async (req, res) => {
   const post = await db.post.update(
     { text: req.body.content },

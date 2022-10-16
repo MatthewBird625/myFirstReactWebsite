@@ -18,6 +18,14 @@ UPDATE: I have since deleted all the branches from Assignment 1 for clarity of m
 
 <img src="./ReadMeImages/A2_Main.png" alt="begin A2 photo" title="begin A2 photo">
 
+# referencing and sources
+
+I have been careful to reference where I got my material from. I have included links to my REGEX sources for the login and registration above where they are delcared.
+
+Apart from a date conversion(referenced in Profile.js), The only other material used/referenced is the RMIT-FWP WEEK 8 lab. I have included a note that this lab is also used in the related files.
+
+It was primarily used as a starter base for the back end and getting up and running with the Posts and the User models.
+
 # Server/express
 
 To Setup the server-
