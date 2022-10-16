@@ -58,7 +58,6 @@ async function getPosts() {
 }
 
 async function createPost(post) {
-  console.log(post);
   const response = await axios.post(API_HOST + "/api/posts", post);
 
   return response.data;
@@ -71,7 +70,6 @@ async function deletePost(id) {
 }
 
 async function updatePost(newPost) {
-  console.log(newPost);
   const response = await axios.post(API_HOST + "/api/posts/editPost", newPost);
 
   return response.data;
@@ -80,7 +78,6 @@ async function updatePost(newPost) {
 //deletes all posts relating to a user when the account is deleted
 
 async function deleteUserPosts(userEmail) {
-  console.log(userEmail);
   const response = await axios.post(
     API_HOST + "/api/posts/deleteUser",
     userEmail
@@ -110,7 +107,6 @@ async function deleteComments(id) {
 //deletes all comments relating to a user when the account is deleted
 
 async function deleteUserComments(userEmail) {
-  console.log(userEmail);
   const response = await axios.post(
     API_HOST + "/api/comments/deleteUser",
     userEmail
@@ -156,7 +152,6 @@ async function deleteReactions(id) {
 }
 
 async function deleteUserReactions(userEmail) {
-  console.log(userEmail);
   const response = await axios.post(
     API_HOST + "/api/reactions/deleteUser",
     userEmail

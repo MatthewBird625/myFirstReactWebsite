@@ -61,7 +61,6 @@ const RegisterForm = (props) => {
   };
 
   const handleTrim = (userDirty) => {
-    console.log(user);
     let userClean = {};
     for (const field in userDirty) {
       userClean[field] = userDirty[field].trim();

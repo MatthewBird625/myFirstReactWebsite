@@ -33,7 +33,7 @@ const LoginForm = (props) => {
   const logInUser = (email) => {
     props.setLogin(true);
     props.logInUser(email);
-    console.log("loggin in!");
+
     setUser(email);
     navigate("/");
   };

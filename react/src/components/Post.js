@@ -37,7 +37,6 @@ const Post = (props) => {
       const result = await updatePost(form);
     };
     if (value !== defaultFormContent) {
-      console.log("update triggered");
       updatePostEffect();
       props.reloadPosts();
     }
@@ -55,7 +54,7 @@ const Post = (props) => {
   const submitEditPost = async (event) => {
     event.preventDefault();
     setForm({ ...form, content: value });
-    console.log("submitting edit");
+
     setDefaultFormContent(form.content);
     toggleEditMode();
     props.reloadPosts();

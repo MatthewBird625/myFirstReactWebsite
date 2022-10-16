@@ -13,7 +13,6 @@ const Profile = (props) => {
     const fetchUser = async () => {
       const result = await findUser(getUser().email);
       setUser(result);
-      console.log("fetching user" + getUser().email);
     };
     fetchUser().catch(console.error);
   }, []);

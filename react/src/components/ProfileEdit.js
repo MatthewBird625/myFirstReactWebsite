@@ -9,6 +9,8 @@ import {
   setUserLocal,
 } from "../data/repository";
 
+import "../Assets/CSS/Profile.css";
+
 const ProfileEdit = (props) => {
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
@@ -71,7 +73,7 @@ const ProfileEdit = (props) => {
   return (
     <div>
       {" "}
-      <Form onSubmit={handleSubmit}>
+      <Form className="padding" onSubmit={handleSubmit} id="profile">
         <Form.Group className="mb-3" controlId="formBasicEmail">
           <Form.Label>New Email address</Form.Label>
           <Form.Control

@@ -34,12 +34,14 @@ const DeleteUser = (props) => {
   };
 
   return (
-    <div>
-      <h2>are you sure you want to delete {props.currentUser}'s account?</h2>
+    <div id="profile">
+      <h4 className="center">
+        are you sure you want to delete account: <b>{props.currentUser}</b> ?
+      </h4>
       <Form onSubmit={handleSubmit}>
         <Row>
           <Col>
-            <Button className="button-bigger" variant="primary" type="submit">
+            <Button className="button-bigger" variant="danger" type="submit">
               Yes
             </Button>
           </Col>
