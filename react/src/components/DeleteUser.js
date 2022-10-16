@@ -1,7 +1,13 @@
 import { Form, Row, Col, Button } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
-import { deleteUser, getUser } from "../data/repository";
+import {
+  deleteUser,
+  getUser,
+  deleteUserReactions,
+  deleteUserComments,
+  deleteUserPosts,
+} from "../data/repository";
 
 const DeleteUser = (props) => {
   const navigate = useNavigate();
@@ -15,7 +21,11 @@ const DeleteUser = (props) => {
   const [user, setUser] = useState(getUser());
 
   const handleSubmit = () => {
+    deleteUserReactions(user);
+    deleteUserComments(user);
+    deleteUserPosts(user);
     deleteUser(user);
+
     props.setLogin(false);
     props.logInUser("");
     alert("account deleted!");

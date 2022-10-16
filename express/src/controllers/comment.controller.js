@@ -28,3 +28,14 @@ exports.deleteAll = async (req, res) => {
 
   res.json(comments);
 };
+
+//deletes all comments of a user removing them as a constraint preventing user delete
+exports.deleteUser = async (req, res) => {
+  console.log("deleting comments realating to user");
+  console.log(req.body);
+  const comments = await db.comment.destroy({
+    where: { userEmail: req.body.email },
+  });
+
+  res.json(comments);
+};

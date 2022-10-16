@@ -39,3 +39,14 @@ exports.edit = async (req, res) => {
 
   res.json(post);
 };
+
+//deletes all posts of a user removing them as a constraint preventing user delete
+exports.deleteUser = async (req, res) => {
+  console.log("deleting posts realating to user");
+  console.log(req.body);
+  const posts = await db.post.destroy({
+    where: { userEmail: req.body.email },
+  });
+
+  res.json(posts);
+};
