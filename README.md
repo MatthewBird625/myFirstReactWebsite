@@ -1,5 +1,9 @@
 # 3482450 README
 
+## github FWP repo for my assignment:
+
+https://github.com/rmit-fwp-s2-2022/3482450
+
 This readme is related to marking. See readme in src for lanch instructions.
 
 ## node version:
