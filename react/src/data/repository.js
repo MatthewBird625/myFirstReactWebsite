@@ -13,12 +13,13 @@ async function verifyUser(email, password) {
   });
   const user = response.data;
 
-  // NOTE: In this example the login is also persistent as it is stored in local storage.
+  //store user in local storage
   if (user !== null) setUserLocal(user);
 
   return user;
 }
 
+//these are straight forward API for creating,deleting and updating user
 async function findUser(id) {
   const response = await axios.get(API_HOST + `/api/users/select/${id}`);
 
@@ -75,7 +76,7 @@ async function updatePost(newPost) {
   return response.data;
 }
 
-//deletes all posts relating to a user when the account is deleted
+//deletes all posts relating to a user when the account is deleted (removes the constraint theses posts have on deleting the user account)
 
 async function deleteUserPosts(userEmail) {
   const response = await axios.post(
@@ -104,7 +105,7 @@ async function deleteComments(id) {
   return response.data;
 }
 
-//deletes all comments relating to a user when the account is deleted
+//deletes all comments relating to a user when the account is deleted (removes the constraint theses comments have on deleting the user account)
 
 async function deleteUserComments(userEmail) {
   const response = await axios.post(
@@ -145,12 +146,14 @@ async function getReactions(id) {
   return response.data;
 }
 
+//deletes all creactions relating to a post when the post is deleted (removes the constraint theses reactions have on deleting the  post)
 async function deleteReactions(id) {
   const response = await axios.post(API_HOST + "/api/reactions/deleteAll", id);
 
   return response.data;
 }
 
+//deletes all reactions relating to a user when the account is deleted (removes the constraint theses reactions have on deleting the user account)
 async function deleteUserReactions(userEmail) {
   const response = await axios.post(
     API_HOST + "/api/reactions/deleteUser",

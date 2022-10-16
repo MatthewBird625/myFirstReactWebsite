@@ -3,7 +3,7 @@
 module.exports = (express, app) => {
   const controller = require("../controllers/post.controller.js");
   const router = express.Router();
-
+  //see the API in the repository pointing to these routes to understand their purpose(there are some comments in the repo if their purpose is beyond basic)
   // Select all posts.
   router.get("/", controller.all);
 

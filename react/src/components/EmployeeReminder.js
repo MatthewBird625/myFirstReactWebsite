@@ -1,5 +1,6 @@
 import { Card } from "react-bootstrap";
 
+//this just serves as a nice space filler on the login page
 const EmployeeReminder = () => {
   return (
     <Card className="text-center  bg-secondary text-white my-4 py-4">

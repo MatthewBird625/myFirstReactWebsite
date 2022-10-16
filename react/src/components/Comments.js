@@ -10,7 +10,6 @@ import "../Assets/CSS/Comments.css";
 
 const Comments = (props) => {
   //variables
-
   const [comment, setComment] = useState({
     content: "",
     userEmail: props.currentUser,
@@ -19,11 +18,11 @@ const Comments = (props) => {
 
   const [postComments, setPostComments] = useState("");
   const [loadingComments, setLoadingComments] = useState(true);
-
   const commentRef = useRef(null);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
-  //effects
+
+  //fetch all the comments before rendering
   useEffect(() => {
     const fetchComments = async () => {
       const result = await getComments(props.postId);
@@ -35,17 +34,15 @@ const Comments = (props) => {
     fetchComments().catch(console.error);
   }, [props.postId]);
 
+  //allows the comments to be refreshed after a user has posted a new comment
   const refreshComments = async () => {
     const result = await getComments(props.postId);
-
     setPostComments(result);
-
     setLoadingComments(false);
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     setError("");
     if (comment.content.length < 1 || comment.content.length > 600) {
       setError("comments must be between 1 and 600 characters");
@@ -61,7 +58,7 @@ const Comments = (props) => {
     }
     await refreshComments();
   };
-
+  //change handler for form fields
   const handleChange = (field) => (event) => {
     setComment((comment) => ({ ...comment, [field]: event.target.value }));
   };
