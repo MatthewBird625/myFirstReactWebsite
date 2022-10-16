@@ -61,7 +61,6 @@ exports.update = async (req, res) => {
 };
 // delete a user in the database.
 exports.delete = async (req, res) => {
-  console.log(req.body.email);
   const user = await db.user.destroy({
     where: { email: req.body.email },
   });

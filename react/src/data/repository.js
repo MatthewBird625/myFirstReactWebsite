@@ -58,7 +58,6 @@ async function getPosts() {
 }
 
 async function createPost(post) {
-  console.log(post);
   const response = await axios.post(API_HOST + "/api/posts", post);
 
   return response.data;
@@ -72,6 +71,17 @@ async function deletePost(id) {
 
 async function updatePost(newPost) {
   const response = await axios.post(API_HOST + "/api/posts/editPost", newPost);
+
+  return response.data;
+}
+
+//deletes all posts relating to a user when the account is deleted
+
+async function deleteUserPosts(userEmail) {
+  const response = await axios.post(
+    API_HOST + "/api/posts/deleteUser",
+    userEmail
+  );
 
   return response.data;
 }
@@ -90,6 +100,17 @@ async function createComment(comment) {
 
 async function deleteComments(id) {
   const response = await axios.post(API_HOST + "/api/comments/deleteAll", id);
+
+  return response.data;
+}
+
+//deletes all comments relating to a user when the account is deleted
+
+async function deleteUserComments(userEmail) {
+  const response = await axios.post(
+    API_HOST + "/api/comments/deleteUser",
+    userEmail
+  );
 
   return response.data;
 }
@@ -130,6 +151,15 @@ async function deleteReactions(id) {
   return response.data;
 }
 
+async function deleteUserReactions(userEmail) {
+  const response = await axios.post(
+    API_HOST + "/api/reactions/deleteUser",
+    userEmail
+  );
+
+  return response.data;
+}
+
 // --- Helper functions to interact with local storage --------------------------------------------
 function setUserLocal(user) {
   localStorage.setItem(USER_KEY, JSON.stringify(user));
@@ -165,4 +195,7 @@ export {
   deleteReaction,
   getReactions,
   deleteReactions,
+  deleteUserReactions,
+  deleteUserComments,
+  deleteUserPosts,
 };

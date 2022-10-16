@@ -59,7 +59,7 @@ const Comments = (props) => {
     } catch {
       setError("failed to post comment!");
     }
-    refreshComments();
+    await refreshComments();
   };
 
   const handleChange = (field) => (event) => {

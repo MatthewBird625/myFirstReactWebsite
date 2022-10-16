@@ -3,6 +3,7 @@ import { useState, useRef, useEffect } from "react";
 import { Form, Row, Col, Button, Alert } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import { getUser, updatePassword } from "../data/repository";
+import "../Assets/CSS/Profile.css";
 
 const PasswordEdit = (props) => {
   let user = getUser();
@@ -55,7 +56,6 @@ const PasswordEdit = (props) => {
       userEmail: user.email,
     };
     const change = await updatePassword(passwords);
-    console.log(change.result);
 
     if (change.result !== false) {
       setSuccess("password changed!");
@@ -66,7 +66,7 @@ const PasswordEdit = (props) => {
 
   return (
     <div>
-      <Form onSubmit={handleSubmit}>
+      <Form onSubmit={handleSubmit} id="profile" className="padding">
         <Form.Group className="mb-3" controlId="formBasicEmail">
           <Form.Label>old Password</Form.Label>
           <Form.Control

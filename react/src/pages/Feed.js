@@ -26,14 +26,13 @@ const Feed = (props) => {
     fetchPosts().catch(console.error);
   }, [isLoadingPosts]);
 
-  const reloadPosts = async () => {
+  const fetchPosts = async () => {
     const result = await getPosts();
 
     setPosts(result);
-    setIsLoadingPosts(false);
   };
-  const reloadThePostsData = () => {
-    console.log("TOGGLE");
+  const reloadThePostsData = async () => {
+    await fetchPosts();
     if (isLoadingPosts === false) {
       setIsLoadingPosts(true);
     } else {
@@ -56,7 +55,7 @@ const Feed = (props) => {
           ) : (
             posts.map((post) => (
               <Post
-                reloadPosts={reloadPosts}
+                reloadPosts={reloadThePostsData}
                 postData={post}
                 currentUser={props.currentUser}
                 key={post.post_id}
